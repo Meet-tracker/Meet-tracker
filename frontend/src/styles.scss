@@ -1,1 +1,102 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'normalize.css';
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+html {
+  font-size: 16px; // Базовый размер шрифта
+  line-height: 1.5;
+}
+
+body {
+  font-family: Arial, sans-serif; // Основной шрифт для текста
+  color: #333; // Основной цвет текста
+  background-color: #f5f5f5; // Фон всего приложения
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 1rem;
+  font-weight: bold;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+ul, ol {
+  margin: 0 0 1rem 1.5rem;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Пример цветовых переменных
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$background-color: #f8f9fa;
+$text-color: #343a40;
+
+body {
+  background-color: $background-color;
+  color: $text-color;
+}
+
+a {
+  color: $primary-color;
+}
+
+button {
+  background-color: $primary-color;
+  color: #fff;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+// Класс для скрытия элементов
+.hidden {
+  display: none !important;
+}
+
+// Класс для центрирования элементов
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Класс для добавления теней к блокам
+.shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+// Пример медиа-запросов для адаптивного дизайна
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    margin-bottom: 0.5rem;
+  }
+}
