@@ -1,5 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
-import { MainComponent } from './main/main.component';
+import { MainComponent } from './components/main.component';
 import { ModuleWithProviders } from '@angular/core';
 
 export const routes: Routes = [
