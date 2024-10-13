@@ -9,7 +9,7 @@ for router in routers:
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins="localhost:*,127.0.0.1:*".split(','),
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods='*'.split(','),
     allow_headers='*'.split(','),
