@@ -1,0 +1,4 @@
+fastapi
+environs
+asyncpg
+uvicorn
