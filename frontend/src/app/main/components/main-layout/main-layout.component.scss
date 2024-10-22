@@ -2,7 +2,7 @@
 
 .main-layout {
   &__container {
-    background-color: $secondary-color;
+    background-color: $fon-secondary;
   }
 
   &__header {
@@ -11,7 +11,7 @@
     justify-content: center;
     margin-bottom: 60px;
     height: 120px;
-    background-color: $primary-color;
+    background-color: $fon-primary;
 
     &__item {
       display: flex;
@@ -31,7 +31,7 @@
     }
   }
 
-  main-layout__content {
+  &__content {
     width: 100%;
     padding: 0 120px;
   }

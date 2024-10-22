@@ -1,9 +1,18 @@
+@import '@taiga-ui/core/styles/taiga-ui-local';
+:root {
+
+}
+
+
 //Цвета
-$primary-color: #000;
-$secondary-color: #FFF;
-$list-color: #FEF7FF;
-$list-color2: #F3EDF7;
-$list-item-color: #EADDFF;
+$fon-primary: #000;
+$fon-secondary: #FFF;
+
+$accent-color1: #FEF7FF;
+$accent-color2: #F3EDF7;
+$accent-color3: #EADDFF;
+
+
 //Шрифты
 $font-size-base: 16px;
 $font-color1: #FFF;

@@ -1,9 +1,36 @@
+@import "../../../../variables";
+
 .list-videos {
   &__container {
     max-width: 320px;
   }
+
   &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $accent-color2;
     padding: 0 16px;
     height: 72px;
+  }
+
+  &__item {
+    height: 48px;
+    background-color: $accent-color1;
+    border-bottom: 1px solid $fon-secondary;
+  }
+
+  &__search {
+    cursor: pointer;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: end;
+  }
+
+  &__footer-icon {
+    height: 32px;
+    width: 32px;
   }
 }
