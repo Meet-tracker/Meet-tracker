@@ -1,0 +1,38 @@
+@import "../../../../variables";
+
+.main-layout {
+  &__container {
+    background-color: $secondary-color;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 60px;
+    height: 120px;
+    background-color: $primary-color;
+
+    &__item {
+      display: flex;
+      cursor: pointer;
+
+      &:not(:last-child) {
+        margin: 0 320px 0 0;
+      }
+    }
+
+    &__icon {
+      margin-right: 12px;
+    }
+
+    &__link {
+      color: $font-color1;
+    }
+  }
+
+  main-layout__content {
+    width: 100%;
+    padding: 0 120px;
+  }
+}

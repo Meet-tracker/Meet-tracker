@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 
 @Injectable()
 export class ApiService {
@@ -12,7 +12,12 @@ export class ApiService {
   }
 
   public getAdmin(): Observable<any> {
-    return this.http.post('api/admin/', {'Я админ': 'админ'});
+    return this.http.post('api/admin/', {'Я админ': 'админ'}).pipe(
+      catchError((err: any): Observable<never> => {
+        console.log(err)
+        return of()
+      })
+    );
   }
 
   public getDatabase(): Observable<any> {
