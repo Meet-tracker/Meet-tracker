@@ -1,11 +1,11 @@
 FROM python:3.10
 
-WORKDIR /whisper
+WORKDIR /server
 
-COPY whisper/requirements.txt .
+COPY /backend/server/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY /whisper/ .
+COPY /backend/server/ .
 
 COPY .env .
 

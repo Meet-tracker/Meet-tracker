@@ -9,9 +9,11 @@ async def init_db(db_connection: asyncpg.Connection) -> None:
         '''
         CREATE TABLE IF NOT EXISTS users
         (
-        chat_id BIGINT PRIMARY KEY,
-        name TEXT,
+        chat_id BIGINT,
         email VARCHAR(120),
+        isAdmin BOOLEAN,
+        login TEXT,
+        password TEXT,
         created_at timestamp DEFAULT CURRENT_TIMESTAMP
         )
         '''
@@ -22,12 +24,10 @@ async def init_db(db_connection: asyncpg.Connection) -> None:
         (
         id SERIAL PRIMARY KEY,
         chat_id BIGINT, 
-        title TEXT,
+        text TEXT,
         uploaded_file_id TEXT,
-        drive_id CHAR(33),
         status TEXT, 
-        created_at timestamp DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY(chat_id) REFERENCES users(chat_id)
+        created_at timestamp DEFAULT CURRENT_TIMESTAMP
         )
         '''
     )
