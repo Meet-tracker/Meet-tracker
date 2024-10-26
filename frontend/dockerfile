@@ -1,0 +1,12 @@
+FROM node:22.9.0
+WORKDIR /app
+
+COPY /frontend/package.json .
+RUN npm install --force
+
+COPY /frontend/ .
+RUN npm run build
+
+EXPOSE 4000
+
+CMD ["node", "dist/frontend/server/server.mjs"]
