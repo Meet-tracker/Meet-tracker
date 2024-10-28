@@ -50,11 +50,9 @@ services:
       context: .
       dockerfile: frontend/dockerfile
     ports:
-      - "4000:4000"
+      - ${SITE_PORT}:${SITE_PORT}
     networks:
       - network
-
-
 
 networks:
   network:

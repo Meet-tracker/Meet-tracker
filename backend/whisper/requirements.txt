@@ -1,0 +1,4 @@
+environs
+git+https://github.com/m-bain/whisperx.git
+fastapi
+uvicorn

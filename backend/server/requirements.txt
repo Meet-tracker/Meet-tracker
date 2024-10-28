@@ -2,3 +2,4 @@ fastapi
 environs
 asyncpg
 uvicorn
+ollama
