@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from '../../api.service';
 
 @Component({
   templateUrl: 'auth.component.html',
@@ -7,8 +8,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class AuthComponent {
 
+  constructor(
+    private _apiService: ApiService,
+  ) {
+  }
+
   protected readonly authForm = new FormGroup({
-    email: new FormControl('', [
+    username: new FormControl('', [
       Validators.required,
     ]),
     password: new FormControl('', [
@@ -18,10 +24,10 @@ export class AuthComponent {
 
 
   public onSubmit(): void {
-    if (this.authForm.valid) {
-      const authFormValue = this.authForm.value;
+    const authFormValue = this.authForm.value;
 
-      console.log(authFormValue);
-    }
+    this._apiService.login(authFormValue);
+
+    console.log(authFormValue);
   }
 }
