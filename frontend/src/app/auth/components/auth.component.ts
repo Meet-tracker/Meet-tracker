@@ -26,7 +26,7 @@ export class AuthComponent {
   public onSubmit(): void {
     const authFormValue = this.authForm.value;
 
-    this._apiService.login(authFormValue);
+    this._apiService.login(authFormValue).subscribe();
 
     console.log(authFormValue);
   }

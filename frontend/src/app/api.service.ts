@@ -16,7 +16,7 @@ export class ApiService {
   }
 
   public login(params: any): Observable<any>{
-    return this.http.post(`api/login/`, params)
+    return this.http.post(`http://MeetTracker-server:8000/login`, params)
       .pipe(tap((response: any) => {
         // Сохраняем токен в localStorage и BehaviorSubject
         // localStorage.setItem('access_token', response.access_token);
