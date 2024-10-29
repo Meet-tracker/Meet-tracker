@@ -1,0 +1,33 @@
+<div class="auth__wrapper">
+  <div class="auth__container">
+    <span>Вход</span>
+
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+      <tui-input formControlName="email">
+        Type an login
+        <input
+          tuiTextfieldLegacy
+          type="text"
+        />
+      </tui-input>
+      <tui-input formControlName="password">
+        Type an password
+        <input
+          tuiTextfieldLegacy
+          type="password"
+        />
+      </tui-input>
+
+      <button
+        size="l"
+        tuiButton
+        type="button"
+        [disabled]="authForm.invalid"
+        (click)="onSubmit()"
+      >
+        Войти
+      </button>
+    </form>
+
+  </div>
+</div>

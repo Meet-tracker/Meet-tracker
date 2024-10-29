@@ -1,0 +1,31 @@
+@import "../../../../variables";
+
+.content-block {
+
+  &__container {
+    width: 740px;
+  }
+
+  &__head {
+    position: relative;
+    margin: 0 0 40px 0;
+    padding: 16px 8px;
+    height: 150px;
+    background-color: $fon-3;
+  }
+
+  &__main {
+    height: 600px;
+
+    background-color: $fon-3;
+  }
+
+  &__action-menu {
+    position: absolute;
+    right: 8px;
+  }
+
+  &__action-menu-icon {
+    cursor: pointer;
+  }
+}

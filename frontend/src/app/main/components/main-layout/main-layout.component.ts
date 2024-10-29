@@ -12,10 +12,5 @@ export class MainLayoutComponent {
 
   constructor(private _apiService: ApiService) {
 
-    forkJoin([
-      this._apiService.getAdmin(),
-      this._apiService.getUser(),
-      this._apiService.getDatabase(),
-    ]).subscribe();
   }
 }

@@ -5,18 +5,20 @@ import { MainLayoutComponent } from './components/main-layout/main-layout.compon
 import { ListVideosComponent } from './components/list-videos/list-videos.component';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
+import { ContentBlockComponent } from './components/content-block/content-block.component';
 
 @NgModule({
   declarations: [
     MainLayoutComponent,
     ListVideosComponent,
+    ContentBlockComponent,
   ],
     imports: [
         CommonModule,
         routing,
         TuiButton,
         TuiAvatar,
-        TuiIcon
+        TuiIcon,
     ]
 })
 export class MainModule { }
