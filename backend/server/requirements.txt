@@ -3,3 +3,7 @@ environs
 asyncpg
 uvicorn
 ollama
+passlib
+pydantic
+bcrypt
+PyJWT
