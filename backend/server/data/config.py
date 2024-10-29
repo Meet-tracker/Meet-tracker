@@ -17,5 +17,8 @@ class Configuration:
 
     SERVER_PORT = env.int("SERVER_PORT")
 
+    JWT_SECRET_KEY = env.str("JWT_SECRET_KEY")
+    JWT_ALGORITHM = env.str("JWT_ALGORITHM")
+
 
 conf = Configuration()

@@ -7,14 +7,17 @@ from .db_connection import with_postgres_connection
 async def init_db(db_connection: asyncpg.Connection) -> None:
     await db_connection.execute(
         '''
-        CREATE TABLE IF NOT EXISTS users
+        CREATE TABLE IF NOT EXISTS users 
         (
-        chat_id BIGINT,
-        email VARCHAR(120),
-        isAdmin BOOLEAN,
-        login TEXT,
-        password TEXT,
-        created_at timestamp DEFAULT CURRENT_TIMESTAMP
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(50),
+        password VARCHAR(255),
+        email VARCHAR(100),
+        role VARCHAR(20) DEFAULT 'user',
+        is_active BOOLEAN DEFAULT TRUE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        last_login TIMESTAMP
         )
         '''
     )
