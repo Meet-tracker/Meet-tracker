@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'content-block',
@@ -9,7 +10,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ContentBlockComponent {
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private _apiService: ApiService
+  ) {}
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   public selectedFile: File | null = null;
   fileUrl: string | null = null;
@@ -30,10 +33,11 @@ export class ContentBlockComponent {
   // Отправляем файл на сервер
   onUpload(): void {
     if (this.selectedFile) {
-      const formData = new FormData();
+      const formData: FormData = new FormData();
       formData.append('file', this.selectedFile, this.selectedFile.name);
 
-      this.http.post('/api/upload', formData).subscribe(
+      this._apiService.uploadVideo(formData)
+        .subscribe(
         (response) => {
           console.log('Upload successful', response);
         },

@@ -1,0 +1,15 @@
+.result {
+  &__container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__text {
+    font-family: Impact, sans-serif;
+    font-size: 100px;
+    font-weight: 900;
+  }
+}

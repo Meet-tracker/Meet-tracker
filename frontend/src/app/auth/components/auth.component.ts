@@ -29,7 +29,7 @@ export class AuthComponent {
     if (this.authForm.valid) {
       const authFormValue: ILoginModel = this.authForm.value as ILoginModel;
 
-      authFormValue.password = sha256(this.authForm.value.password || '').toString();
+      authFormValue.password = sha256(this.authForm.value.password + '').toString();
       this._apiService.login(authFormValue).subscribe();
     }
   }

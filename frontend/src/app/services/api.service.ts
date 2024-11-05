@@ -5,6 +5,8 @@ import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 @Injectable()
 export class ApiService {
 
+  private readonly _api: string = 'http://localhost:8000';
+
   private tokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient) {
@@ -17,7 +19,7 @@ export class ApiService {
   }
 
   public login(params: any): Observable<any>{
-    return this.http.post(`http://MeetTracker-server:8000/login`, params)
+    return this.http.post(`${this._api}/login`, params)
       .pipe(tap((response: any) => {
         if (typeof localStorage !== 'undefined') {
           localStorage.setItem('access_token', response.access_token);
@@ -45,7 +47,7 @@ export class ApiService {
   }
 
   public getAdmin(): Observable<any> {
-    return this.http.post('api/admin/', {'Я админ': 'админ'}).pipe(
+    return this.http.post(`${this._api}/admin/`, {'Я админ': 'админ'}).pipe(
       catchError((err: any): Observable<never> => {
         console.log(err)
         return of()
@@ -54,14 +56,22 @@ export class ApiService {
   }
 
   public getDatabase(): Observable<any> {
-    return this.http.post('api/database/', {'Я бд': 'бд'});
+    return this.http.post(`${this._api}/database/`, {'Я бд': 'бд'});
   }
 
   public getProcessing(): Observable<any> {
-    return this.http.post('api/trascribe/', {'Я процесс': 'процесс'});
+    return this.http.post(`${this._api}/trascribe/`, {'Я процесс': 'процесс'});
   }
 
   public getUser(): Observable<any> {
-    return this.http.post('api/user', {'Я юзер': 'юзер'});
+    return this.http.post(`${this._api}/user`, {'Я юзер': 'юзер'});
+  }
+
+  public getResult(id: string): Observable<any> {
+    return this.http.post(`${this._api}/result`, {'id': id});
+  }
+
+  public uploadVideo(formData: FormData): Observable<any> {
+    return this.http.post(`${this._api}/upload`, formData);
   }
 }
