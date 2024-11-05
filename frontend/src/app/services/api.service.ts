@@ -68,10 +68,22 @@ export class ApiService {
   }
 
   public getResult(id: string): Observable<any> {
-    return this.http.post(`${this._api}/result`, {'id': id});
+    try {
+      return this.http.post(`${this._api}/result`, {'id': id});
+    }
+    catch (error) {
+      console.log(error);
+      return of('');
+    }
   }
 
   public uploadVideo(formData: FormData): Observable<any> {
-    return this.http.post(`${this._api}/upload`, formData);
+    try {
+      return this.http.post(`${this._api}/upload`, formData);
+    }
+    catch (error) {
+      console.log(error);
+      return of({});
+    }
   }
 }
