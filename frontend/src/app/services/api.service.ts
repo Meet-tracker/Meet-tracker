@@ -8,22 +8,41 @@ export class ApiService {
   private tokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient) {
-    // Проверяем, есть ли токен при инициализации
-    // const token = localStorage.getItem('access_token');
-    // if (token) {
-    //   this.tokenSubject.next(token);
-    // }
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        this.tokenSubject.next(token);
+      }
+    }
   }
 
   public login(params: any): Observable<any>{
     return this.http.post(`http://MeetTracker-server:8000/login`, params)
       .pipe(tap((response: any) => {
-        // Сохраняем токен в localStorage и BehaviorSubject
-        // localStorage.setItem('access_token', response.access_token);
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('access_token', response.access_token);
+        }
         this.tokenSubject.next(response.access_token);
       }));
   }
 
+  // Выход
+  public logout(): void {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('access_token');
+    }
+    this.tokenSubject.next(null);
+  }
+
+  // Получаем текущий токен
+  public getToken(): string | null {
+    return this.tokenSubject.value;
+  }
+
+  // Проверка статуса аутентификации
+  public isAuthenticated(): boolean {
+    return !!this.tokenSubject.value;
+  }
 
   public getAdmin(): Observable<any> {
     return this.http.post('api/admin/', {'Я админ': 'админ'}).pipe(

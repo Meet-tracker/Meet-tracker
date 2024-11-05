@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../../services/api.service';
+import { ILoginModel } from '../interfaces/login-model';
+import sha256 from 'crypto-js/sha256';
 
 @Component({
   templateUrl: 'auth.component.html',
@@ -24,10 +26,11 @@ export class AuthComponent {
 
 
   public onSubmit(): void {
-    const authFormValue = this.authForm.value;
+    if (this.authForm.valid) {
+      const authFormValue: ILoginModel = this.authForm.value as ILoginModel;
 
-    this._apiService.login(authFormValue).subscribe();
-
-    console.log(authFormValue);
+      authFormValue.password = sha256(this.authForm.value.password || '').toString();
+      this._apiService.login(authFormValue).subscribe();
+    }
   }
 }

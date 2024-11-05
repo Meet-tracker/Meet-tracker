@@ -17,4 +17,15 @@
     border-radius: 16px;
     box-shadow: 0 0 8px black;
   }
+
+  &__title {
+    display: block;
+    margin: 0 0 45px 0;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  &__control {
+    margin-bottom: 10px;
+  }
 }

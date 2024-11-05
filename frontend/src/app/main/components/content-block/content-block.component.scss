@@ -28,4 +28,13 @@
   &__action-menu-icon {
     cursor: pointer;
   }
+
+  &__file {
+    height: 100%;
+    width: 70px;
+    video {
+      height: 100%;
+      width: 100%;
+    }
+  }
 }

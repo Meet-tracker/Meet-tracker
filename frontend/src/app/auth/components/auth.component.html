@@ -1,16 +1,16 @@
 <div class="auth__wrapper">
   <div class="auth__container">
-    <span>Вход</span>
+    <span class="auth__title">Вход</span>
 
     <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
-      <tui-input formControlName="username">
+      <tui-input formControlName="username" class="auth__control">
         Type an login
         <input
           tuiTextfieldLegacy
           type="text"
         />
       </tui-input>
-      <tui-input formControlName="password">
+      <tui-input formControlName="password" class="auth__control">
         Type an password
         <input
           tuiTextfieldLegacy

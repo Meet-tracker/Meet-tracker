@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ApiService } from '../../../api.service';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-components',
@@ -10,7 +8,4 @@ import { forkJoin } from 'rxjs';
 })
 export class MainLayoutComponent {
 
-  constructor(private _apiService: ApiService) {
-
-  }
 }
