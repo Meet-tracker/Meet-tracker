@@ -84,24 +84,23 @@ def diarize(audio):
 
 
 def transcribe_audio(audio_file_path):
-    pass
-    # try:
-    #     audio = whisperx.load_audio(audio_file_path)
-    #     transcription_result, aligned_result = transcribe(audio)
-    #     diarize_segments = diarize(audio)
-    #
-    #     final_result = whisperx.assign_word_speakers(
-    #         diarize_segments,
-    #         aligned_result
-    #     )
-    #
-    #     return final_result
-    # finally:
-    #     try:
-    #         del audio, transcription_result, aligned_result, diarize_segments, final_result
-    #     except:
-    #         pass
-    #     finally:
-    #         gc.collect()
-    #
-    #         torch.cuda.empty_cache()
+    try:
+        audio = whisperx.load_audio(audio_file_path)
+        transcription_result, aligned_result = transcribe(audio)
+        diarize_segments = diarize(audio)
+
+        final_result = whisperx.assign_word_speakers(
+            diarize_segments,
+            aligned_result
+        )
+
+        return final_result
+    finally:
+        try:
+            del audio, transcription_result, aligned_result, diarize_segments, final_result
+        except:
+            pass
+        finally:
+            gc.collect()
+
+            torch.cuda.empty_cache()

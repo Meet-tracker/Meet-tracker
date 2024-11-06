@@ -34,7 +34,7 @@ export class ContentBlockComponent {
   onUpload(): void {
     if (this.selectedFile) {
       const formData: FormData = new FormData();
-      formData.append('file', this.selectedFile, this.selectedFile.name);
+      formData.append('file', this.selectedFile);
 
       this._apiService.uploadVideo(formData)
         .subscribe(

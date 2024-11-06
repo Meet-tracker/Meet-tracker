@@ -1,27 +1,16 @@
+import logging
 import os
 import uuid
-from dataclasses import dataclass
 
-from environs import Env
-from fastapi import HTTPException, BackgroundTasks, APIRouter, status, Request
+import aiohttp
+import librosa
+import soundfile as sf
+from api.auth import get_current_user
+from data.config import conf
+from data.functions import upload_file, generate_llm_answer
+from fastapi import APIRouter, Request, File, UploadFile, Depends
 
-env = Env()
-env.read_env(".env")
-
-
-# @dataclass
-# class Configuration:
-#     whisper_model = env.str("WHISPER_MODEL", "large-v3")
-#     device = env.str("DEVICE", "cuda")
-#     device_2 = env.str("DEVICE_2", "cuda")
-#     compute_type = env.str("COMPUTE_TYPE", "float16")
-#     batch_size = env.int("BATCH_SIZE", "16")
-#     language_code = env.str("LANGUAGE_CODE", "auto")
-#     hf_api_key = env.str("HF_API_KEY")
-#     bot_url = f'{env.str("BOT_NAME")}:{"5000"}'
-#
-#
-# settings = Configuration()
+from database import upsert_transcription, upsert_transcription_text, get_transcription_text_by_id
 
 
 class MaxBodySizeException(Exception):
@@ -40,66 +29,68 @@ class MaxBodySizeValidator:
             raise MaxBodySizeException(self.body_len)
 
 
+async def send_post_request(data):
+    url = f"http://{conf.WHISPER_NAME}:8001/transcribe"
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=data) as response:
+            if response.status != 200:
+                return Exception
+            return await response.text()
+
+
 processing_router = APIRouter()
 
 
-@processing_router.post("/transcribe/")
-async def create_upload_file(
-        request: Request,
-        background_tasks: BackgroundTasks
-) -> dict:
-    message = await request.json()
-    message['answer'] = 'success admin'
-    return message
-    #task_id = str(uuid.uuid4())
-    #tmp_path = f"{settings.tmp_dir}/{task_id}.audio"
-    #
-    #body_validator = MaxBodySizeValidator(settings.max_request_body_size_mb * 1024 * 1024)
-    #
-    # try:
-    #     file_target = FileTarget(
-    #         tmp_path,
-    #         validator=MaxSizeValidator(settings.max_file_size_mb * 1024 * 1024)
-    #     )
-    #     parser = StreamingFormDataParser(headers=request.headers)
-    #     parser.register('file', file_target)
-    #     async for chunk in request.stream():
-    #         body_validator(chunk)
-    #         parser.data_received(chunk)
-    #
-    # except MaxBodySizeException as e:
-    #     raise HTTPException(
-    #         status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
-    #         detail=f"Maximum request body size limit exceeded: {e.body_len} bytes"
-    #     )
-    #
-    # except Exception as e:
-    #     if os.path.exists(tmp_path):
-    #         os.remove(tmp_path)
-    #     raise HTTPException(
-    #         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-    #         detail=f"Error processing upload: {str(e)}"
-    #     )
-    #
-    # if not file_target.multipart_filename:
-    #     if os.path.exists(tmp_path):
-    #         os.remove(tmp_path)
-    #     raise HTTPException(
-    #         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-    #         detail='No file was uploaded'
-    #     )
+@processing_router.post("/upload")
+async def upload(
+        file: UploadFile = File(...),
+        current_user: dict = Depends(get_current_user)
+):
+    task_id = str(uuid.uuid4())
+    tmp_path = f"/var/lib/audio_tmp/{task_id}.mp4"
 
-#
-# @processing_router.get("/transcribe/status/{task_id}")
-# async def get_task_status(task_id: str) -> dict:
-#
-#     return {
-#         "task_id": task_id
-#     }
-#
-#
-# @processing_router.get("/transcribe/result/{task_id}")
-# async def get_task_result(task_id: str) -> dict:
-#     return {
-#         "task_id": task_id
-#     }
+    contents = await file.read()
+
+    with open(tmp_path, "wb") as f:
+        f.write(contents)
+
+    audio_path = f"/var/lib/audio_tmp/{task_id}.wav"
+
+    audio, sr = librosa.load(tmp_path, sr=None)
+    sf.write(audio_path, audio, sr)
+
+    os.remove(tmp_path)
+
+    await upload_file(f'{task_id}.audio', audio_path)
+
+    await upsert_transcription(current_user['username'], task_id, 'Processing')
+
+    await send_post_request({'task_id': task_id, 'tmp_path': audio_path})
+
+    return {
+        "answer": 'ok',
+    }
+
+
+@processing_router.post("/whisper/result")
+async def get_result(request: Request):
+    message = await request.json()
+    transcript = message['text']
+    task_id = message['task_id']
+    status = message['status']
+
+    text = await generate_llm_answer(transcript)
+
+    await upsert_transcription_text(task_id, text, status)
+
+    return {"success": True}
+
+
+@processing_router.post("/result")
+async def get_result(request: Request, current_user: dict = Depends(get_current_user)):
+    message = await request.json()
+    task_id = message['id']
+
+    text = await get_transcription_text_by_id(task_id)
+
+    return {"result": text['text']}

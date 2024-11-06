@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 
+
 @Injectable()
 export class ApiService {
 
@@ -78,12 +79,12 @@ export class ApiService {
   }
 
   public uploadVideo(formData: FormData): Observable<any> {
-    try {
-      return this.http.post(`${this._api}/upload`, formData);
-    }
-    catch (error) {
-      console.log(error);
-      return of({});
-    }
+    return this.http.post(`${this._api}/upload`, formData).pipe(
+      catchError((error: any) => {
+        console.error('Upload failed:', error);
+        return of({ error: 'Upload failed', details: error });
+      })
+    );
+
   }
 }

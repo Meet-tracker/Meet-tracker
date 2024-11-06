@@ -26,6 +26,10 @@ services:
     build:
       context: .
       dockerfile: backend/server/dockerfile
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    volumes:
+      - volume:/var/lib/audio_tmp
     networks:
       - network
 
@@ -41,6 +45,8 @@ services:
           devices:
             - driver: nvidia
               capabilities: [ gpu ]
+    volumes:
+      - volume:/var/lib/audio_tmp
     networks:
       - network
 
@@ -53,6 +59,20 @@ services:
       - ${SITE_PORT}:${SITE_PORT}
     networks:
       - network
+
+  minio:
+    container_name: ${MINIO_NAME}
+    restart: always
+    image: minio/minio
+    command: server /data
+    environment:
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+    networks:
+      - network
+
+volumes:
+  volume:
 
 networks:
   network:

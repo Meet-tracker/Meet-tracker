@@ -2,3 +2,5 @@ environs
 git+https://github.com/m-bain/whisperx.git
 fastapi
 uvicorn
+requests
+ctranslate2==4.4.0

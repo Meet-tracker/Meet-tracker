@@ -20,5 +20,15 @@ class Configuration:
     JWT_SECRET_KEY = env.str("JWT_SECRET_KEY")
     JWT_ALGORITHM = env.str("JWT_ALGORITHM")
 
+    MINIO_NAME = env.str("MINIO_NAME")
+    MINIO_ACCESS_KEY = env.str("MINIO_ACCESS_KEY")
+    MINIO_SECRET_KEY = env.str("MINIO_SECRET_KEY")
+    MINIO_BUCKET_NAME = env.str("MINIO_BUCKET_NAME")
+
+    WHISPER_NAME = env.str("WHISPER_NAME")
+
+    OLLAMA_NAME = env.str("OLLAMA_NAME")
+    OLLAMA_MODEL = env.str("OLLAMA_MODEL")
+
 
 conf = Configuration()

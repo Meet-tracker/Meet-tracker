@@ -2,8 +2,11 @@ fastapi
 environs
 asyncpg
 uvicorn
-ollama
-passlib
 pydantic
-bcrypt
 PyJWT
+miniopy-async
+librosa
+soundfile
+streaming-form-data
+ollama
+python-multipart

@@ -11,7 +11,7 @@ async def init_db(db_connection: asyncpg.Connection) -> None:
         (
         id SERIAL PRIMARY KEY,
         username VARCHAR(50),
-        password VARCHAR(255),
+        password VARCHAR(64),
         email VARCHAR(100),
         role VARCHAR(20) DEFAULT 'user',
         is_active BOOLEAN DEFAULT TRUE,
@@ -26,7 +26,7 @@ async def init_db(db_connection: asyncpg.Connection) -> None:
         CREATE TABLE IF NOT EXISTS transcriptions
         (
         id SERIAL PRIMARY KEY,
-        chat_id BIGINT, 
+        username VARCHAR(50),
         text TEXT,
         uploaded_file_id TEXT,
         status TEXT, 
