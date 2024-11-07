@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-components',
@@ -8,4 +10,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class MainLayoutComponent {
 
+  constructor(private _apiService: ApiService) { }
+
+  public getTgBotLink(): string {
+    return `tg://resolve?domain=meet_tracker_bot&start=${this._apiService.getToken()}`
+  }
 }

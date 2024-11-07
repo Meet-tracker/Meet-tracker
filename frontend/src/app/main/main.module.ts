@@ -13,12 +13,13 @@ import { ContentBlockComponent } from './components/content-block/content-block.
     ListVideosComponent,
     ContentBlockComponent,
   ],
-    imports: [
-        CommonModule,
-        routing,
-        TuiButton,
-        TuiAvatar,
-        TuiIcon,
-    ]
+  imports: [
+    CommonModule,
+    routing,
+    TuiButton,
+    TuiAvatar,
+    TuiIcon,
+  ],
 })
-export class MainModule { }
+export class MainModule {
+}
