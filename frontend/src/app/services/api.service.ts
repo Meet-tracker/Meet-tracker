@@ -10,6 +10,8 @@ export class ApiService {
 
   private tokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
+  private userNameSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+
   constructor(private http: HttpClient) {
     if (typeof localStorage !== 'undefined') {
       const token = localStorage.getItem('access_token');
@@ -24,8 +26,10 @@ export class ApiService {
       .pipe(tap((response: any) => {
         if (typeof localStorage !== 'undefined') {
           localStorage.setItem('access_token', response.access_token);
+          localStorage.setItem('user_name_value', params.username);
         }
         this.tokenSubject.next(response.access_token);
+        this.userNameSubject.next(params.username);
       }));
   }
 
@@ -40,6 +44,10 @@ export class ApiService {
   // Получаем текущий токен
   public getToken(): string | null {
     return this.tokenSubject.value;
+  }
+
+  public getUserName(): string | null {
+    return this.userNameSubject.value;
   }
 
   // Проверка статуса аутентификации
@@ -62,10 +70,6 @@ export class ApiService {
 
   public getProcessing(): Observable<any> {
     return this.http.post(`${this._api}/trascribe/`, {'Я процесс': 'процесс'});
-  }
-
-  public getUser(): Observable<any> {
-    return this.http.post(`${this._api}/user`, {'Я юзер': 'юзер'});
   }
 
   public getResult(id: string): Observable<any> {
