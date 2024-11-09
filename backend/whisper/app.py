@@ -35,7 +35,7 @@ def send_post_request(data):
 
 def worker():
     while True:
-        task_id, tmp_path = trancription_tasks_queue.get()
+        task_id, tmp_path, user = trancription_tasks_queue.get()
 
         try:
             result = transcribe_audio(tmp_path)
@@ -54,11 +54,12 @@ def worker():
 
                 last_speaker = speaker
 
-            print(send_post_request(data={"text": transcript, 'status': 'Transcribed', "task_id": task_id}))
+            data = {"text": transcript, 'status': 'Transcribed', "task_id": task_id, 'user': user}
         except Exception as e:
-            print(send_post_request(data={"text": 'Произошла ошибка во время обработки.', 'status': 'Failed', "task_id": task_id}))
+            data = {"text": 'Произошла ошибка во время обработки.', 'status': 'Failed', "task_id": task_id, 'user': user}
 
         finally:
+            send_post_request(data)
             trancription_tasks_queue.task_done()
             os.remove(tmp_path)
 
@@ -75,7 +76,8 @@ async def create_upload_file(
     message = await request.json()
     task_id = message['task_id']
     tmp_path = message['tmp_path']
-    trancription_tasks_queue.put((task_id, tmp_path))
+    user = message['user']
+    trancription_tasks_queue.put((task_id, tmp_path, user))
 
     return {
         "answer": 'ok',

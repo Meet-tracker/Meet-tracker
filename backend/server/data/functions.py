@@ -1,6 +1,8 @@
-from data.config import conf
 from miniopy_async import Minio
 from ollama import AsyncClient
+from aiogram import Bot
+
+from data.config import conf
 
 
 async def upload_file(name, file_path):
@@ -32,8 +34,11 @@ minio = Minio(
 
 
 async def generate_llm_answer(text):
-    answer = await ollama.generate(model='llama3.1:8b', prompt=f"Текст:\n{text}\nВыведи резюме по каждому участнику встречи.")
+    answer = await ollama.generate(model='llama3.1:8b',
+                                   prompt=f"Текст:\n{text}\nВыведи резюме по каждому участнику встречи.")
     return answer['response']
 
 
 ollama = AsyncClient(host=f'http://{conf.OLLAMA_NAME}:11434')
+
+bot = Bot(token=conf.BOT_TOKEN)

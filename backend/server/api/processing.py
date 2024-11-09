@@ -1,4 +1,3 @@
-import logging
 import os
 import uuid
 
@@ -7,26 +6,10 @@ import librosa
 import soundfile as sf
 from api.auth import get_current_user
 from data.config import conf
-from data.functions import upload_file, generate_llm_answer
+from data.functions import upload_file, generate_llm_answer, bot
 from fastapi import APIRouter, Request, File, UploadFile, Depends
 
-from database import upsert_transcription, upsert_transcription_text, get_transcription_text_by_id
-
-
-class MaxBodySizeException(Exception):
-    def __init__(self, body_len: int):
-        self.body_len = body_len
-
-
-class MaxBodySizeValidator:
-    def __init__(self, max_size: int):
-        self.body_len = 0
-        self.max_size = max_size
-
-    def __call__(self, chunk: bytes):
-        self.body_len += len(chunk)
-        if self.body_len > self.max_size:
-            raise MaxBodySizeException(self.body_len)
+from database import upsert_transcription, upsert_transcription_text, get_transcription_text_by_id, get_telegram
 
 
 async def send_post_request(data):
@@ -61,11 +44,11 @@ async def upload(
 
     os.remove(tmp_path)
 
-    await upload_file(f'{task_id}.audio', audio_path)
+    await upload_file(f'{task_id}.wav', audio_path)
 
     await upsert_transcription(current_user['username'], task_id, 'Processing')
 
-    await send_post_request({'task_id': task_id, 'tmp_path': audio_path})
+    await send_post_request({'task_id': task_id, 'tmp_path': audio_path, 'user': current_user['username']})
 
     return {
         "answer": 'ok',
@@ -78,8 +61,14 @@ async def get_result(request: Request):
     transcript = message['text']
     task_id = message['task_id']
     status = message['status']
+    user = message['user']
 
     text = await generate_llm_answer(transcript)
+
+    telegram = await get_telegram(user)
+
+    if telegram:
+        await bot.send_message(chat_id=int(telegram), text=f"http://localhost:4000/result/{task_id}")
 
     await upsert_transcription_text(task_id, text, status)
 
@@ -93,4 +82,4 @@ async def get_result(request: Request, current_user: dict = Depends(get_current_
 
     text = await get_transcription_text_by_id(task_id)
 
-    return {"result": text['text']}
+    return {"result": text}

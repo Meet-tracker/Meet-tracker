@@ -18,3 +18,35 @@ async def create_user(
         ''',
         username, password, email, role
     )
+
+
+@with_postgres_connection
+async def add_telegram(
+        db_connection: asyncpg.Connection,
+        username: str,
+        chat_id: int,
+):
+    await db_connection.execute(
+        '''
+        UPDATE users
+        SET chat_id = $2
+        WHERE username = $1
+        ''',
+        username, chat_id
+    )
+
+
+@with_postgres_connection
+async def get_telegram(
+        db_connection: asyncpg.Connection,
+        username: str
+):
+    chat_id = await db_connection.fetchrow(
+        '''
+        SELECT chat_id
+        FROM users
+        WHERE username = $1
+        ''',
+        username
+    )
+    return chat_id['chat_id'] if chat_id else None

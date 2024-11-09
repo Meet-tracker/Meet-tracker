@@ -13,6 +13,7 @@ async def init_db(db_connection: asyncpg.Connection) -> None:
         username VARCHAR(50),
         password VARCHAR(64),
         email VARCHAR(100),
+        chat_id BIGINT,
         role VARCHAR(20) DEFAULT 'user',
         is_active BOOLEAN DEFAULT TRUE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

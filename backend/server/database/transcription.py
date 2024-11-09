@@ -50,4 +50,4 @@ async def get_transcription_text_by_id(
                 ''',
         uploaded_file_id
     )
-    return transcription_text
+    return transcription_text['text'] if transcription_text else None

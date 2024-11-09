@@ -10,3 +10,4 @@ soundfile
 streaming-form-data
 ollama
 python-multipart
+aiogram

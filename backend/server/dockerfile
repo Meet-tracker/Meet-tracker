@@ -2,7 +2,7 @@ FROM python:3.10
 
 WORKDIR /server
 
-RUN apt-get update && apt-get install -y ffmpeg
+RUN apt-get update && apt-get install -y ffmpeg supervisor
 
 COPY /backend/server/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
@@ -11,4 +11,4 @@ COPY /backend/server/ .
 
 COPY .env .
 
-CMD ["/bin/bash", "-c", "python3 app.py"]
+CMD ["/usr/bin/supervisord", "-c", "./supervisord.conf"]
