@@ -15,25 +15,26 @@
       >
     </label>
 
-    <tui-files class="tui-space_top-1">
+    <tui-files>
       <tui-file
         *ngIf="selectedFile"
         [file]="selectedFile"
         (remove)="removeFile()"
       />
     </tui-files>
+
+    <button
+      class="content-block__button"
+      size="xl"
+
+      tuiButton
+      type="button"
+      [disabled]="!selectedFile"
+      (click)="onUpload()"
+    >
+      Отправить
+    </button>
   </div>
-
-  <button
-    size="xl"
-
-    tuiButton
-    type="button"
-    [disabled]="!selectedFile"
-    (click)="onUpload()"
-  >
-    Отправить
-  </button>
 </div>
 <div class="content-block__main">
 
