@@ -51,7 +51,7 @@ async def upload(
     await send_post_request({'task_id': task_id, 'tmp_path': audio_path, 'user': current_user['username']})
 
     return {
-        "answer": 'ok',
+        "id": task_id,
     }
 
 
@@ -81,5 +81,6 @@ async def get_result(request: Request, current_user: dict = Depends(get_current_
     task_id = message['id']
 
     text = await get_transcription_text_by_id(task_id)
-
-    return {"result": text}
+    if text:
+        return {"result": text}
+    return {"result": "False"}

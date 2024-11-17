@@ -51,3 +51,19 @@ async def get_transcription_text_by_id(
         uploaded_file_id
     )
     return transcription_text['text'] if transcription_text else None
+
+
+@with_postgres_connection
+async def get_transcription_text_by_username(
+        db_connection: asyncpg.Connection,
+        username: str
+) -> str:
+    transcriptions = await db_connection.fetch(
+        f'''
+                SELECT *
+                FROM transcriptions
+                WHERE username = $1
+                ''',
+        username
+    )
+    return transcriptions

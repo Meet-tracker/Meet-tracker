@@ -2,7 +2,7 @@ from .init import init_db
 
 from .user import create_user, add_telegram, get_telegram
 from .admin import get_user, block_user, delete_user, make_admin
-from .transcription import get_transcription_text_by_id, upsert_transcription_text, upsert_transcription
+from .transcription import get_transcription_text_by_id, upsert_transcription_text, upsert_transcription, get_transcription_text_by_username
 
 
 __all__ = [
@@ -16,5 +16,6 @@ __all__ = [
     'make_admin',
     'get_transcription_text_by_id',
     'upsert_transcription',
-    'upsert_transcription_text'
+    'upsert_transcription_text',
+    'get_transcription_text_by_username'
 ]
