@@ -26,5 +26,6 @@ export const appConfig: ApplicationConfig = {
     )),
     NG_EVENT_PLUGINS,
     ApiService,
-  ]
+        NG_EVENT_PLUGINS
+    ]
 };

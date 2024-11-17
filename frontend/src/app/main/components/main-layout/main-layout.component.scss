@@ -33,11 +33,12 @@
 
   &__content {
     display: flex;
+    justify-content: space-between;
     width: 100%;
     padding: 0 120px;
   }
 
   &__list-videos {
-    margin-right: 120px;
+
   }
 }

@@ -11,14 +11,15 @@
         tuiButton
         type="button"
         iconStart="@tui.plus"
-      >
+        >
       </button>
     </div>
   </div>
   <div class="list-videos__items">
-    <div *ngFor="let i of [1,2,3,4,5]" class="list-videos__item">
-
-    </div>
+    @for (i of [1,2,3,4,5]; track i) {
+      <div class="list-videos__item">
+      </div>
+    }
   </div>
 
   <div class="list-videos__footer">

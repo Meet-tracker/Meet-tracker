@@ -3,11 +3,12 @@ import { Component, SkipSelf } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ApiService } from './services/api.service';
 import { TuiStringHandler } from '@taiga-ui/cdk';
+import { TuiAccordion } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TuiRoot],
+  imports: [RouterOutlet, TuiRoot, TuiRoot, TuiAccordion],
   providers: [
     ApiService,
     {

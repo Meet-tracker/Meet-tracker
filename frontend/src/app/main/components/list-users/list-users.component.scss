@@ -1,0 +1,34 @@
+@import "../../../../variables";
+
+.list-users {
+  &__container {
+    width: 320px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $accent-color2;
+    padding: 0 16px;
+    height: 72px;
+  }
+
+  &__item {
+    background-color: $accent-color1;
+  }
+
+  &__search {
+    cursor: pointer;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: end;
+  }
+
+  &__footer-icon {
+    height: 32px;
+    width: 32px;
+  }
+}

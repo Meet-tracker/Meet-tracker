@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../../services/api.service';
+import { FormControl, Validators } from '@angular/forms';
+import { TuiFileLike } from '@taiga-ui/kit';
 
 @Component({
   selector: 'content-block',
@@ -15,23 +16,21 @@ export class ContentBlockComponent {
   ) {}
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   public selectedFile: File | null = null;
-  fileUrl: string | null = null;
+
+  protected readonly control = new FormControl<TuiFileLike | null>(
+    null,
+    Validators.required,
+  );
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
-      this.fileUrl = URL.createObjectURL(this.selectedFile);
     }
   }
 
-
-  public triggerFileInput() {
-    this.fileInput.nativeElement.click();
-  }
-
   // Отправляем файл на сервер
-  onUpload(): void {
+  public onUpload(): void {
     if (this.selectedFile) {
       const formData: FormData = new FormData();
       formData.append('file', this.selectedFile);
@@ -48,5 +47,9 @@ export class ContentBlockComponent {
     } else {
       console.warn('No file selected');
     }
+  }
+
+  public removeFile(): void {
+    this.selectedFile = null;
   }
 }

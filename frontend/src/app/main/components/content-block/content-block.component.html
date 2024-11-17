@@ -1,22 +1,40 @@
 <div class="content-block__container">
   <div class="content-block__head">
-    <div *ngIf="fileUrl">
-      <div class="content-block__file" *ngIf="selectedFile?.type?.startsWith('video/')">
-        <video controls [src]="fileUrl" width="400"></video>
-      </div>
-      <div class="content-block__file" *ngIf="selectedFile?.type?.startsWith('audio/')">
-        <audio controls [src]="fileUrl"></audio>
-      </div>
-    </div>
-    <div class="content-block__action-menu">
-      <input #fileInput type="file" accept="audio/*,video/*" (change)="onFileSelected($event)" hidden>
-      <tui-icon class="content-block__action-menu-icon" icon="close"/>
-      <tui-icon class="content-block__action-menu-icon" icon="attach_file" (click)="triggerFileInput()"/>
-      <tui-icon class="content-block__action-menu-icon" icon="arrow_forward" (click)="onUpload()"/>
-    </div>
+
+    <label
+      tuiInputFiles
+      class="content-block__file-input"
+    >
+      <input
+        #fileInput
+        tuiInputFiles
+        type="file"
+        accept="audio/*,video/*"
+        (change)="onFileSelected($event)"
+        [formControl]="control"
+      >
+    </label>
+
+    <tui-files class="tui-space_top-1">
+      <tui-file
+        *ngIf="selectedFile"
+        [file]="selectedFile"
+        (remove)="removeFile()"
+      />
+    </tui-files>
   </div>
 
-  <div class="content-block__main">
+  <button
+    size="xl"
 
-  </div>
+    tuiButton
+    type="button"
+    [disabled]="!selectedFile"
+    (click)="onUpload()"
+  >
+    Отправить
+  </button>
+</div>
+<div class="content-block__main">
+
 </div>

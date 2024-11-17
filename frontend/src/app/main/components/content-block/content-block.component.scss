@@ -8,14 +8,12 @@
 
   &__head {
     position: relative;
-    margin: 0 0 40px 0;
     padding: 16px 8px;
     height: 150px;
-    background-color: $fon-3;
   }
 
   &__main {
-    height: 600px;
+    height: 500px;
 
     background-color: $fon-3;
   }
@@ -29,12 +27,8 @@
     cursor: pointer;
   }
 
-  &__file {
-    height: 100%;
-    width: 70px;
-    video {
-      height: 100%;
-      width: 100%;
-    }
+  &__file-input {
+    margin: 0 0 10px 0;
   }
+
 }
