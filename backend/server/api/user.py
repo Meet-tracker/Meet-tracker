@@ -22,4 +22,4 @@ async def login_api(auth_data: AuthUser):
     if not user or auth_data.password != user["password"]:
         raise HTTPException(status_code=400, detail="Invalid username or password")
     access_token = create_access_token(data={"sub": auth_data.username})
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", "role": user['role']}
