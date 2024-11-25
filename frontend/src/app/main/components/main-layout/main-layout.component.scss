@@ -31,6 +31,13 @@
     }
   }
 
+  &__svg {
+
+    &_tg {
+      color: white;
+    }
+  }
+
   &__content {
     display: flex;
     justify-content: space-between;

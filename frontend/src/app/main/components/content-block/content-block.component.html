@@ -20,6 +20,7 @@
         *ngIf="selectedFile"
         [file]="selectedFile"
         (remove)="removeFile()"
+        [size]="'l'"
       />
     </tui-files>
 
@@ -32,7 +33,7 @@
       [disabled]="!selectedFile"
       (click)="onUpload()"
     >
-      Отправить
+      Сгенерировать ревью по встрече
     </button>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { ILoginModel } from '../interfaces/login-model';
@@ -10,12 +10,16 @@ import { Router } from '@angular/router';
   templateUrl: 'auth.component.html',
   styleUrls: ['auth.component.scss'],
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit{
 
   constructor(
     private _apiService: ApiService,
     private _router: Router,
   ) {
+  }
+
+  public ngOnInit(): void {
+    this._apiService.logout();
   }
 
   protected readonly authForm = new FormGroup({
@@ -30,6 +34,7 @@ export class AuthComponent {
 
   public onSubmit(): void {
     if (this.authForm.valid) {
+      this._apiService.logout();
       const authFormValue: ILoginModel = this.authForm.value as ILoginModel;
 
       authFormValue.password = sha256(this.authForm.value.password + '').toString();
@@ -37,7 +42,10 @@ export class AuthComponent {
         .subscribe(
           {
             next: () => {
-              this._router.navigate(['/main']);
+              this._router.navigate(['main']);
+            },
+            error: (error: Error) => {
+              console.error(error);
             }
           }
         );

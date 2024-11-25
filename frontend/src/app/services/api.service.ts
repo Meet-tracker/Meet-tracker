@@ -21,16 +21,19 @@ export class ApiService {
     }
   }
 
-  public login(params: any): Observable<any>{
-    return this.http.post(`${this._api}/login`, params)
-      .pipe(tap((response: any) => {
-        if (typeof localStorage !== 'undefined') {
-          localStorage.setItem('access_token', response.access_token);
-          localStorage.setItem('user_name_value', params.username);
-        }
-        this.tokenSubject.next(response.access_token);
-        this.userNameSubject.next(params.username);
-      }));
+  public login(params: any): Observable<any> {
+    return this.http.post(`${this._api}/login/`, params)
+      .pipe(
+        tap((response: any) => {
+          if (typeof localStorage !== 'undefined') {
+            localStorage.setItem('access_token', response.access_token);
+            localStorage.setItem('user_name_value', params.username);
+          }
+          this.tokenSubject.next(response.access_token);
+          this.userNameSubject.next(params.username);
+        }),
+
+      );
   }
 
   // Выход
@@ -75,8 +78,7 @@ export class ApiService {
   public getResult(id: string): Observable<any> {
     try {
       return this.http.post(`${this._api}/result`, {'id': id});
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       return of('');
     }
@@ -86,7 +88,7 @@ export class ApiService {
     return this.http.post(`${this._api}/upload`, formData).pipe(
       catchError((error: any) => {
         console.error('Upload failed:', error);
-        return of({ error: 'Upload failed', details: error });
+        return of({error: 'Upload failed', details: error});
       })
     );
 
