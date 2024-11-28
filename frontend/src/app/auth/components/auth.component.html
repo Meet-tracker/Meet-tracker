@@ -28,6 +28,11 @@
         Войти
       </button>
     </form>
+    @if (message) {
+      <div class="auth__message">
+        {{message}}
+      </div>
+    }
 
   </div>
 </div>

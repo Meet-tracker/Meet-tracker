@@ -10,16 +10,12 @@ import { Router } from '@angular/router';
   templateUrl: 'auth.component.html',
   styleUrls: ['auth.component.scss'],
 })
-export class AuthComponent implements OnInit{
+export class AuthComponent{
 
   constructor(
     private _apiService: ApiService,
     private _router: Router,
   ) {
-  }
-
-  public ngOnInit(): void {
-    this._apiService.logout();
   }
 
   protected readonly authForm = new FormGroup({
@@ -31,6 +27,7 @@ export class AuthComponent implements OnInit{
     ])
   });
 
+  public message: string = '';
 
   public onSubmit(): void {
     if (this.authForm.valid) {
@@ -45,7 +42,7 @@ export class AuthComponent implements OnInit{
               this._router.navigate(['main']);
             },
             error: (error: Error) => {
-              console.error(error);
+              this.message = 'Не удалось войти'
             }
           }
         );

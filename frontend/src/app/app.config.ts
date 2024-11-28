@@ -13,19 +13,16 @@ import {
   withInterceptorsFromDi
 } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { ApiService } from './services/api.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideAnimations(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
     provideClientHydration(),
     provideHttpClient(withFetch(),
       withInterceptors(
-      [AuthInterceptor],
-    )),
+        [AuthInterceptor],
+      )),
     NG_EVENT_PLUGINS,
-    ApiService,
-        NG_EVENT_PLUGINS
-    ]
+  ]
 };

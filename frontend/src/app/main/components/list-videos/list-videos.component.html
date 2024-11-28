@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="list-videos__items">
-    @for (i of [1,2,3,4,5]; track i) {
+    @for (video of listVideos; track video.Id) {
       <div class="list-videos__item">
       </div>
     }

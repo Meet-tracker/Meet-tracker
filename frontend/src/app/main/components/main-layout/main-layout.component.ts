@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../../services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-components',
@@ -10,9 +11,18 @@ import { ApiService } from '../../../services/api.service';
 })
 export class MainLayoutComponent {
 
-  constructor(private _apiService: ApiService) { }
+  constructor(
+    private _apiService: ApiService,
+    private _router: Router,
+  ) {
+  }
 
   public getTgBotLink(): string {
     return `tg://resolve?domain=meet_tracker_bot&start=${this._apiService.getToken()}`
+  }
+
+  public logOut(): void {
+    this._apiService.logout();
+    this._router.navigate(['auth']);
   }
 }

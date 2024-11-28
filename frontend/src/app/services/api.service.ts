@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
+import { IVideoResponseModel } from '../main/components/list-videos/interfaces/video-response-model.interface';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ApiService {
 
   private readonly _api: string = 'http://localhost:8000';
@@ -15,8 +18,13 @@ export class ApiService {
   constructor(private http: HttpClient) {
     if (typeof localStorage !== 'undefined') {
       const token = localStorage.getItem('access_token');
+      const userName = localStorage.getItem('user_name_value');
       if (token) {
         this.tokenSubject.next(token);
+      }
+
+      if (userName) {
+        this.userNameSubject.next(userName);
       }
     }
   }
@@ -82,6 +90,10 @@ export class ApiService {
       console.log(error);
       return of('');
     }
+  }
+
+  public getListVideos(): Observable<IVideoResponseModel[]> {
+    return this.http.get<IVideoResponseModel[]>(`${this._api}/user/transcriptions/`)
   }
 
   public uploadVideo(formData: FormData): Observable<any> {

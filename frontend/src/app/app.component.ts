@@ -10,7 +10,6 @@ import { TuiAccordion } from '@taiga-ui/kit';
   standalone: true,
   imports: [RouterOutlet, TuiRoot, TuiRoot, TuiAccordion],
   providers: [
-    ApiService,
     {
       provide: TUI_ICON_RESOLVER,
       deps: [[new SkipSelf(), TUI_ICON_RESOLVER]],
