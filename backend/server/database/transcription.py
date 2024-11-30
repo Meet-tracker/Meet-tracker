@@ -9,7 +9,7 @@ async def upsert_transcription(
         username: str,
         status: str
 ):
-    await db_connection.execute(
+    result = await db_connection.execute(
         '''
         INSERT INTO transcriptions (username, status) 
         VALUES ($1, $2)
@@ -18,6 +18,7 @@ async def upsert_transcription(
         username, status
     )
 
+    return result['id']
 
 @with_postgres_connection
 async def upsert_transcription_text(
