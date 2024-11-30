@@ -29,7 +29,6 @@ async def init_db(db_connection: asyncpg.Connection) -> None:
         id SERIAL PRIMARY KEY,
         username VARCHAR(50),
         text TEXT,
-        uploaded_file_id TEXT,
         status TEXT, 
         created_at timestamp DEFAULT CURRENT_TIMESTAMP
         )

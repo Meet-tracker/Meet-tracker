@@ -2,7 +2,7 @@ from api.auth import create_access_token, get_current_user
 from api.models import AuthUser, User
 from fastapi import APIRouter, HTTPException, Request, Depends
 
-from database import create_user, get_user, get_transcription_text_by_username
+from database import create_user, get_user, get_transcription_by_username, delete_transcription
 
 user_router = APIRouter()
 
@@ -27,5 +27,12 @@ async def login_api(auth_data: AuthUser):
 
 @user_router.get("/user/transcriptions/")
 async def get_users_api(request: Request, current_user: dict = Depends(get_current_user)):
-    transcriptions = await get_transcription_text_by_username(current_user['username'])
+    transcriptions = await get_transcription_by_username(current_user['username'])
+    return transcriptions
+
+
+@user_router.get("/delete/transcriptions/")
+async def get_users_api(request: Request, current_user: dict = Depends(get_current_user)):
+    message = await request.json()
+    transcriptions = await delete_transcription(message['id'])
     return transcriptions

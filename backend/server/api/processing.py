@@ -1,5 +1,4 @@
 import os
-import uuid
 
 import aiohttp
 import librosa
@@ -29,29 +28,28 @@ async def upload(
         file: UploadFile = File(...),
         current_user: dict = Depends(get_current_user)
 ):
-    task_id = str(uuid.uuid4())
-    tmp_path = f"/var/lib/audio_tmp/{task_id}.mp4"
+    id = await upsert_transcription(current_user['username'], 'Processing')
+
+    tmp_path = f"/var/lib/audio_tmp/{id}.mp4"
 
     contents = await file.read()
 
     with open(tmp_path, "wb") as f:
         f.write(contents)
 
-    audio_path = f"/var/lib/audio_tmp/{task_id}.wav"
+    audio_path = f"/var/lib/audio_tmp/{id}.wav"
 
     audio, sr = librosa.load(tmp_path, sr=None)
     sf.write(audio_path, audio, sr)
 
     os.remove(tmp_path)
 
-    await upload_file(f'{task_id}.wav', audio_path)
+    await upload_file(f'{id}.wav', audio_path)
 
-    await upsert_transcription(current_user['username'], task_id, 'Processing')
-
-    await send_post_request({'task_id': task_id, 'tmp_path': audio_path, 'user': current_user['username']})
+    await send_post_request({'task_id': id, 'tmp_path': audio_path, 'user': current_user['username']})
 
     return {
-        "id": task_id,
+        "id": id,
     }
 
 

@@ -7,22 +7,22 @@ from .db_connection import with_postgres_connection
 async def upsert_transcription(
         db_connection: asyncpg.Connection,
         username: str,
-        uploaded_file_id: str,
         status: str
 ):
     await db_connection.execute(
         '''
-        INSERT INTO transcriptions (username, uploaded_file_id, status) 
-        VALUES ($1, $2, $3)
+        INSERT INTO transcriptions (username, status) 
+        VALUES ($1, $2)
+        RETURNING id
         ''',
-        username, uploaded_file_id, status
+        username, status
     )
 
 
 @with_postgres_connection
 async def upsert_transcription_text(
         db_connection: asyncpg.Connection,
-        uploaded_file_id: str,
+        transcription_id: str,
         text: str,
         status: str
 ):
@@ -31,39 +31,54 @@ async def upsert_transcription_text(
         UPDATE transcriptions
         SET text = $2, 
             status = $3
-        WHERE uploaded_file_id = $1
+        WHERE id = $1
         ''',
-        uploaded_file_id, text, status
+        transcription_id, text, status
     )
 
 
 @with_postgres_connection
 async def get_transcription_text_by_id(
         db_connection: asyncpg.Connection,
-        uploaded_file_id: str
+        transcription_id: str
 ) -> str:
     transcription_text = await db_connection.fetchrow(
         f'''
                 SELECT text
                 FROM transcriptions
-                WHERE uploaded_file_id = $1
+                WHERE id = $1
                 ''',
-        uploaded_file_id
+        transcription_id
     )
     return transcription_text['text'] if transcription_text else None
 
 
 @with_postgres_connection
-async def get_transcription_text_by_username(
+async def get_transcription_by_username(
         db_connection: asyncpg.Connection,
         username: str
 ) -> str:
     transcriptions = await db_connection.fetch(
         f'''
-                SELECT *
+                SELECT id, status, created_at
                 FROM transcriptions
                 WHERE username = $1
                 ''',
         username
     )
     return transcriptions
+
+
+@with_postgres_connection
+async def delete_transcription(
+        db_connection: asyncpg.Connection,
+        transcription_id: int
+) -> None:
+    await db_connection.execute(
+        '''
+        UPDATE transcriptions
+        SET status = 'Deleted'
+        WHERE id = $1
+        ''',
+        transcription_id
+    )
