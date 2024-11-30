@@ -1,3 +1,5 @@
+import logging
+
 import asyncpg
 
 from .db_connection import with_postgres_connection
@@ -9,7 +11,7 @@ async def upsert_transcription(
         username: str,
         status: str
 ):
-    result = await db_connection.execute(
+    result = await db_connection.fetchrow(
         '''
         INSERT INTO transcriptions (username, status) 
         VALUES ($1, $2)
@@ -17,7 +19,6 @@ async def upsert_transcription(
         ''',
         username, status
     )
-
     return result['id']
 
 @with_postgres_connection
@@ -64,6 +65,7 @@ async def get_transcription_by_username(
                 SELECT id, status, created_at
                 FROM transcriptions
                 WHERE username = $1
+                ORDER BY created_at DESC
                 ''',
         username
     )
