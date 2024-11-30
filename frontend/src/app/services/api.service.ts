@@ -66,23 +66,6 @@ export class ApiService {
     return !!this.tokenSubject.value;
   }
 
-  public getAdmin(): Observable<any> {
-    return this.http.post(`${this._api}/admin/`, {'Я админ': 'админ'}).pipe(
-      catchError((err: any): Observable<never> => {
-        console.log(err)
-        return of()
-      })
-    );
-  }
-
-  public getDatabase(): Observable<any> {
-    return this.http.post(`${this._api}/database/`, {'Я бд': 'бд'});
-  }
-
-  public getProcessing(): Observable<any> {
-    return this.http.post(`${this._api}/trascribe/`, {'Я процесс': 'процесс'});
-  }
-
   public getResult(id: string): Observable<any> {
     try {
       return this.http.post(`${this._api}/result`, {'id': id});

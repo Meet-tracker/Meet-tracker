@@ -7,13 +7,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: $fon-secondary;
   }
 
   &__container {
     width: 460px;
     height: 520px;
     padding: 90px;
-    background-color: $fon-secondary;
+    background-color: $fon-primary;
     border-radius: 16px;
     box-shadow: 0 0 8px black;
   }

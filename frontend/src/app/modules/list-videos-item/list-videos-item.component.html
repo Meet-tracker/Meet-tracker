@@ -1,0 +1,31 @@
+
+
+<div class="list-videos-item">
+
+  <div class="list-videos-item__content">
+    <div class="list-videos-item__date">
+      {{model.CreatedAtDate}}
+    </div>
+
+    @if (model.Status === 'Processing') {
+      <tui-badge appearance="warning">В Обработке</tui-badge>
+    } @else if (model.Status === 'Transcribed') {
+      <tui-badge appearance="positive">Обработан</tui-badge>
+    } @else {
+      <tui-badge appearance="negative">Ошибка</tui-badge>
+    }
+
+    <div class="list-videos-item__popup-menu">
+      <tui-icon
+        icon="@tui.ellipsis"
+        [tuiDropdown]="template"
+        [(tuiDropdownOpen)]="open"
+      >
+      </tui-icon>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  {{'awdawdawdawdw'}}
+</ng-template>

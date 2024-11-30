@@ -1,0 +1,15 @@
+@import "../../../variables";
+
+.list-videos-item {
+  cursor: pointer;
+  background-color: $accent-color3;
+  border-bottom: 1px solid $line;
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+  }
+
+
+}

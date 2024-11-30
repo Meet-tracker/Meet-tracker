@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { ILoginModel } from '../interfaces/login-model';
 import sha256 from 'crypto-js/sha256';
-import { IResultModel } from '../../result/interfaces/result.model';
 import { Router } from '@angular/router';
 
 @Component({

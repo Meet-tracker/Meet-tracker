@@ -1,7 +1,8 @@
 import { IVideoResponseModel } from '../interfaces/video-response-model.interface';
 
 export class VideoModel {
-  public Created_at: Date;
+  public CreatedAtDate: string;
+  public CreatedAtTime: string;
   public Id: string;
   public Status: string;
   public Text: string;
@@ -9,11 +10,20 @@ export class VideoModel {
   public Username: string;
 
   constructor(data: IVideoResponseModel) {
-    this.Created_at = new Date(data.created_at);
+    this.CreatedAtDate = this.makeDate(new Date(data.created_at));
+    this.CreatedAtTime = this.makeTime(new Date(data.created_at));
     this.Id = data.id;
     this.Status = data.status;
     this.Text = data.text;
     this.UploadedFileId = data.uploaded_file_id;
     this.Username = data.username;
+  }
+
+  private makeDate(value: Date): string {
+    return value.getFullYear() + '-' + value.getMonth() + '-' + value.getDate();
+  }
+
+  private makeTime(value: Date): string {
+    return value.getHours() + ':' + value.getMinutes();
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { VideoModel } from './models/video.model';
 import { map } from 'rxjs';
@@ -11,11 +11,11 @@ import { IVideoResponseModel } from './interfaces/video-response-model.interface
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListVideosComponent implements OnInit {
-
   public listVideos: VideoModel[] = [];
 
   constructor(
     private _apiService: ApiService,
+    private _cdr: ChangeDetectorRef,
   ) {
 
   }
@@ -24,11 +24,16 @@ export class ListVideosComponent implements OnInit {
     this._apiService.getListVideos()
       .pipe(
         map((result: IVideoResponseModel[]) => {
-          result.forEach((video: IVideoResponseModel) => {
-            this.listVideos.push(new VideoModel(video));
-          })
+          return result.map((video: IVideoResponseModel) => new VideoModel(video))
         })
       )
-      .subscribe()
+      .subscribe(
+        {
+          next: ((result: VideoModel[]) => {
+            this.listVideos = result;
+            this._cdr.detectChanges();
+          })
+        }
+      )
   }
 }

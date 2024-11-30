@@ -1,20 +1,27 @@
 @import '@taiga-ui/core/styles/taiga-ui-local';
-:root {
 
+:root {
+  --tui-text-primary-on-accent-1: #2f3338;
+  --tui-text-action: #2f3338;
+  --tui-text-action-hover: #2f3338;
+  --tui-background-accent-1: #ffc465;
+  --tui-background-accent-1-hover: #fab64f;
+  --tui-background-accent-1-pressed: #fab64f;
 }
 
-
 //Цвета
-$fon-primary: #000;
-$fon-secondary: #FFF;
+$fon-primary: #D9D9D9;
+$fon-secondary: #2f3338;
 $fon-3: #D9D9D9;
 
-$accent-color1: #FEF7FF;
-$accent-color2: #F3EDF7;
-$accent-color3: #EADDFF;
+$accent-color1: #2f3338;
+$accent-color2: #D9D9D9;
+$accent-color3: #a5a5a5;
 
 
 //Шрифты
 $font-size-base: 16px;
 $font-color1: #FFF;
 $font-color2: #1D1B20;
+
+$line: #848484;

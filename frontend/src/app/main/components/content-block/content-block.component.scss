@@ -29,6 +29,11 @@
 
   &__file-input {
     margin: 0 0 10px 0;
+    background-color: $accent-color2;
+  }
+
+  &__files {
+    background-color: $accent-color2;
   }
 
   &__button {

@@ -11,7 +11,7 @@ SECRET_KEY = conf.JWT_SECRET_KEY
 ALGORITHM = conf.JWT_ALGORITHM
 
 
-def create_access_token(data: dict, expires_delta: timedelta = timedelta(minutes=30)):
+def create_access_token(data: dict, expires_delta: timedelta = timedelta(days=1)):
     to_encode = data.copy()
     expire = datetime.utcnow() + expires_delta
     to_encode.update({"exp": expire})
