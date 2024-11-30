@@ -2,7 +2,7 @@ from api.auth import get_current_admin_user
 from api.models import User
 from fastapi import APIRouter, HTTPException, Depends, Request
 
-from database import create_user, get_user, delete_user, block_user, make_admin, get_transcription_text_by_username
+from database import create_user, get_user, delete_user, block_user, make_admin, get_transcription_by_username
 
 admin_router = APIRouter()
 
@@ -16,7 +16,7 @@ async def get_users_api(current_admin: dict = Depends(get_current_admin_user)):
 @admin_router.post("/admin/transcriptions/")
 async def get_users_api(request: Request, current_admin: dict = Depends(get_current_admin_user)):
     message = await request.json()
-    transcriptions = await get_transcription_text_by_username(message['username'])
+    transcriptions = await get_transcription_by_username(message['username'])
     return transcriptions
 
 

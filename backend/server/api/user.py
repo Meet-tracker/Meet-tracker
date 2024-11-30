@@ -34,5 +34,5 @@ async def get_users_api(request: Request, current_user: dict = Depends(get_curre
 @user_router.get("/delete/transcriptions/")
 async def get_users_api(request: Request, current_user: dict = Depends(get_current_user)):
     message = await request.json()
-    transcriptions = await delete_transcription(message['id'])
-    return transcriptions
+    await delete_transcription(message['id'])
+    return {'success': 'true'}
