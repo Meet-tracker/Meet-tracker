@@ -8,5 +8,10 @@ export const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
   },
+  {
+    path: 'video/:id',
+    component: MainLayoutComponent,
+    data: {showVideo: true}
+  }
 ];
 export const routing: ModuleWithProviders<RouterModule> = RouterModule.forChild(routes);

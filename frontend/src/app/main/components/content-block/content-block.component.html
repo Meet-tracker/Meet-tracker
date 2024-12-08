@@ -30,13 +30,23 @@
 
       tuiButton
       type="button"
-      [disabled]="!selectedFile"
+      [disabled]="!selectedFile || loading"
       (click)="onUpload()"
     >
       Сгенерировать ревью по встрече
     </button>
   </div>
 </div>
-<div class="content-block__main">
+@if (showVideoResult && videoId) {
+  <div class="content-block__main-title">
+    Отчет о встере:
+  </div>
+  <div class="content-block__main">
+    {{ videoResult }}
+  </div>
+} @else {
+  <div class="content-block__main">
 
-</div>
+  </div>
+}
+

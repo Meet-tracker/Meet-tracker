@@ -3,6 +3,7 @@ import { ApiService } from '../../../services/api.service';
 import { VideoModel } from './models/video.model';
 import { map } from 'rxjs';
 import { IVideoResponseModel } from './interfaces/video-response-model.interface';
+import { VideoStatus } from './enums/video-status.enum';
 
 @Component({
   selector: 'list-videos',
@@ -36,4 +37,6 @@ export class ListVideosComponent implements OnInit {
         }
       )
   }
+
+  protected readonly VideoStatus = VideoStatus;
 }

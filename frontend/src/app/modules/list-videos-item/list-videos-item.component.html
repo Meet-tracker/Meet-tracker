@@ -1,10 +1,10 @@
-
-
-<div class="list-videos-item">
-
+<div class="list-videos-item" (click)="toVideoInf($event)" [ngClass]="{'is-delete': isDeleted}">
   <div class="list-videos-item__content">
     <div class="list-videos-item__date">
-      {{model.CreatedAtDate}}
+      {{ model.CreatedAtDate }}
+    </div>
+    <div class="list-videos-item__time">
+      {{ model.CreatedAtTime }}
     </div>
 
     @if (model.Status === 'Processing') {
@@ -15,7 +15,7 @@
       <tui-badge appearance="negative">Ошибка</tui-badge>
     }
 
-    <div class="list-videos-item__popup-menu">
+    <div (click)="$event.stopPropagation()" class="list-videos-item__popup-menu">
       <tui-icon
         icon="@tui.ellipsis"
         [tuiDropdown]="template"
@@ -27,5 +27,7 @@
 </div>
 
 <ng-template #template>
-  {{'awdawdawdawdw'}}
+  <div class="list-videos-item__popup">
+    <button class="list-videos-item__popup-item" (click)="deleteItem($event)">Удалить</button>
+  </div>
 </ng-template>

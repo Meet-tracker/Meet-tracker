@@ -66,6 +66,10 @@ export class ApiService {
     return !!this.tokenSubject.value;
   }
 
+  public deleteVideo(id: string): Observable<any> {
+    return this.http.post(`${this._api}/delete/transcriptions/`, {'id': id});
+  }
+
   public getResult(id: string): Observable<any> {
     try {
       return this.http.post(`${this._api}/result`, {'id': id});

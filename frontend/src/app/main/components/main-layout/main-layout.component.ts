@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
 
@@ -15,6 +14,7 @@ export class MainLayoutComponent {
     private _apiService: ApiService,
     private _router: Router,
   ) {
+
   }
 
   public getTgBotLink(): string {

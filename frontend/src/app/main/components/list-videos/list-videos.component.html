@@ -4,7 +4,9 @@
   </div>
   <div class="list-videos__items">
     @for (video of listVideos; track '') {
-      <list-videos-item [model]="video"></list-videos-item>
+      @if (video.Status !== VideoStatus.Deleted) {
+        <list-videos-item [model]="video"></list-videos-item>
+      }
     }
   </div>
 </section>

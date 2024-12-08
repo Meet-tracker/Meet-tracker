@@ -50,7 +50,7 @@ async def get_transcription_text_by_id(
                 FROM transcriptions
                 WHERE id = $1
                 ''',
-        transcription_id
+        int(transcription_id)
     )
     return transcription_text['text'] if transcription_text else None
 

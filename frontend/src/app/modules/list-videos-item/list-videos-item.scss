@@ -11,5 +11,24 @@
     padding: 8px;
   }
 
+  &__popup {
+    width: 150px;
+  }
 
+  &__popup-item {
+    display: block;
+    width: 100%;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    transition: all ease-in-out 0.1s;
+
+    &:hover {
+      background-color: $accent-color2;
+    }
+  }
+
+  &.is-delete {
+    display: none;
+  }
 }

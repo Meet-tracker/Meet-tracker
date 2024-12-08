@@ -1,10 +1,11 @@
 import { IVideoResponseModel } from '../interfaces/video-response-model.interface';
+import { VideoStatus } from '../enums/video-status.enum';
 
 export class VideoModel {
   public CreatedAtDate: string;
   public CreatedAtTime: string;
   public Id: string;
-  public Status: string;
+  public Status: VideoStatus;
   public Text: string;
   public UploadedFileId: string;
   public Username: string;
