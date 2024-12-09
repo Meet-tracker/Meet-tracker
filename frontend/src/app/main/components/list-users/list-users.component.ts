@@ -62,6 +62,8 @@ export class ListUsersComponent implements OnInit {
       return;
     }
 
+    this.openAddMenu = false;
+
     const addFormValue: IUserRequestModel = this.addForm.value as IUserRequestModel;
 
     addFormValue.password = sha256(this.addForm.value.password + '').toString();
@@ -70,5 +72,6 @@ export class ListUsersComponent implements OnInit {
         console.log(message);
       }
     });
+    this._cdr.detectChanges();
   }
 }

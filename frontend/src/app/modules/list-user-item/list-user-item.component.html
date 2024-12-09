@@ -37,6 +37,8 @@
 
 <ng-template #template>
   <div class="list-users-item__popup">
-    <button class="list-users-item__popup-item">Удалить</button>
+    <button class="list-users-item__popup-item" (click)="blockUser($event)">Заблокировать</button>
+    <button class="list-users-item__popup-item" (click)="deleteUser($event)">Удалить</button>
+    <button class="list-users-item__popup-item" (click)="makeAdminUser($event)">Сделать администратором</button>
   </div>
 </ng-template>

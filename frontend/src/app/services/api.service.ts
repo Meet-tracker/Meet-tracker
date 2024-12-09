@@ -92,8 +92,20 @@ export class ApiService {
     }
   }
 
-  public addUser(user: IUserRequestModel): Observable<{message: any}> {
-    return this.http.post<{message: any}>(`${this._api}/admin/users/add/`, user);
+  public blockUser(username: string): Observable<any> {
+    return this.http.put(`${this._api}/admin/users/${username}/block/`, {});
+  }
+
+  public addUser(user: IUserRequestModel): Observable<{ message: any }> {
+    return this.http.post<{ message: any }>(`${this._api}/admin/users/add/`, user);
+  }
+
+  public deleteUser(username: string): Observable<any> {
+    return this.http.delete(`${this._api}/admin/users/${username}/delete/`);
+  }
+
+  public makeAdminUser(username: string): Observable<any> {
+    return this.http.put(`${this._api}/admin/users/${username}/make_admin/`, {});
   }
 
   public getListVideos(): Observable<IVideoResponseModel[]> {
