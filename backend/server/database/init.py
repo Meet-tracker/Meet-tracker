@@ -34,4 +34,16 @@ async def init_db(db_connection: asyncpg.Connection) -> None:
         )
         '''
     )
+
+    await db_connection.execute(
+        '''
+        CREATE TABLE IF NOT EXISTS configuration
+        (
+        whisper_model TEXT,
+        llm_model TEXT,
+        prompt TEXT
+        )
+        '''
+    )
+
     return

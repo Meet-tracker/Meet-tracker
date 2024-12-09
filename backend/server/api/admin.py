@@ -2,7 +2,8 @@ from api.auth import get_current_admin_user
 from api.models import User
 from fastapi import APIRouter, HTTPException, Depends, Request
 
-from database import create_user, get_user, delete_user, block_user, make_admin, get_transcription_by_username
+from database import (create_user, get_user, delete_user, block_user,
+                      modify_admin, get_transcription_by_username, get_configuration)
 
 admin_router = APIRouter()
 
@@ -37,11 +38,57 @@ async def block_user_api(username: str, current_admin: dict = Depends(get_curren
 
 @admin_router.put("/admin/users/{username}/make_admin/")
 async def make_admin_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
-    await make_admin(username)
+    await modify_admin(username, 'admin')
+    return {"message": f"User {username} promoted to admin"}
+
+@admin_router.put("/admin/users/{username}/remove_admin/")
+async def remove_admin_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
+    await modify_admin(username, 'user')
     return {"message": f"User {username} promoted to admin"}
 
 
 @admin_router.delete("/admin/users/{username}/delete/")
 async def delete_user_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
+    await delete_user(username)
+    return {"message": f"User {username} deleted"}
+
+
+
+
+@admin_router.get("/admin/prompt")
+async def get_prompt_api(current_admin: dict = Depends(get_current_admin_user)):
+    prompt = await get_configuration('prompt')
+    return {"message": prompt}
+
+
+@admin_router.get("/admin/model/whisper")
+async def get_model_whisper_api(current_admin: dict = Depends(get_current_admin_user)):
+    model = await get_configuration("whisper_model")
+    return {"message": model}
+
+
+@admin_router.get("/admin/model/llm")
+async def get_model_llm_api(current_admin: dict = Depends(get_current_admin_user)):
+    model = await get_configuration("llm_model")
+    return {"message": model}
+
+
+
+
+
+@admin_router.post("/admin/prompt")
+async def edit_prompt_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
+    await delete_user(username)
+    return {"message": f"User {username} deleted"}
+
+
+@admin_router.post("/admin/model/whisper")
+async def edit_model_whisper_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
+    await delete_user(username)
+    return {"message": f"User {username} deleted"}
+
+
+@admin_router.post("/admin/model/llm")
+async def edit_model_llm_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
     await delete_user(username)
     return {"message": f"User {username} deleted"}

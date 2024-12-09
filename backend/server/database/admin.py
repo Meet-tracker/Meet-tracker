@@ -1,5 +1,3 @@
-import logging
-
 import asyncpg
 
 from .db_connection import with_postgres_connection
@@ -55,15 +53,16 @@ async def delete_user(
 
 
 @with_postgres_connection
-async def make_admin(
+async def modify_admin(
         db_connection: asyncpg.Connection,
         username: str,
+        role: str
 ):
     await db_connection.execute(
         '''
         UPDATE users 
-        SET role = 'admin'
+        SET role = $2
         WHERE username = $1
         ''',
-        username
+        username, role
     )
