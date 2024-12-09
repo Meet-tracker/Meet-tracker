@@ -1,0 +1,42 @@
+<div class="list-users-item" [ngClass]="{'is-delete': isDeleted}">
+  <div class="list-users-item__content">
+    <div class="list-users-item__date">
+      {{ model.Username }}
+    </div>
+
+    @if (model.isActive) {
+      <tui-badge appearance="positive">
+        <span class="list-users-item__span">Активный</span>
+      </tui-badge>
+    } @else {
+      <tui-badge appearance="negative">
+        <span class="list-users-item__span">Неактивный</span>
+      </tui-badge>
+    }
+
+    @if (model.Role === 'admin') {
+      <tui-badge appearance="negative">
+        <span class="list-users-item__span">Админ</span>
+      </tui-badge>
+    } @else if (model.Role === 'user') {
+      <tui-badge appearance="positive">
+        <span class="list-users-item__span">Пользователь</span>
+      </tui-badge>
+    }
+
+    <div (click)="$event.stopPropagation()" class="list-users-item__popup-menu">
+      <tui-icon
+        icon="@tui.ellipsis"
+        [tuiDropdown]="template"
+        [(tuiDropdownOpen)]="open"
+      >
+      </tui-icon>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="list-users-item__popup">
+    <button class="list-users-item__popup-item">Удалить</button>
+  </div>
+</ng-template>

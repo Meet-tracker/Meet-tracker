@@ -10,11 +10,13 @@ import { Router } from '@angular/router';
 })
 export class MainLayoutComponent {
 
+  public showAdminPanel: boolean = false;
+
   constructor(
     private _apiService: ApiService,
     private _router: Router,
   ) {
-
+    this.showAdminPanel = this._apiService.isAdmin();
   }
 
   public getTgBotLink(): string {

@@ -8,11 +8,17 @@
     </div>
 
     @if (model.Status === 'Processing') {
-      <tui-badge appearance="warning">В Обработке</tui-badge>
+      <tui-badge appearance="warning">
+        <span class="list-videos-item__span">В Обработке</span>
+      </tui-badge>
     } @else if (model.Status === 'Transcribed') {
-      <tui-badge appearance="positive">Обработан</tui-badge>
+      <tui-badge appearance="positive">
+        <span class="list-videos-item__span">Обработан</span>
+      </tui-badge>
     } @else {
-      <tui-badge appearance="negative">Ошибка</tui-badge>
+      <tui-badge appearance="negative">
+        <span class="list-videos-item__span">Ошибка</span>
+      </tui-badge>
     }
 
     <div (click)="$event.stopPropagation()" class="list-videos-item__popup-menu">

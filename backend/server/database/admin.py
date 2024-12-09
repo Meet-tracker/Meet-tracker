@@ -8,7 +8,7 @@ from .db_connection import with_postgres_connection
 @with_postgres_connection
 async def get_user(
         db_connection: asyncpg.Connection,
-        username: str,
+        username=None,
 ):
     query = '''
         SELECT * FROM users
@@ -16,11 +16,7 @@ async def get_user(
 
     if username is not None:
         query += f" WHERE username = '{username}'"
-    await db_connection.fetch(
-        '''
-        SELECT * FROM users
-        '''
-    )
+
     records = await db_connection.fetch(query)
 
     if len(records) == 1:

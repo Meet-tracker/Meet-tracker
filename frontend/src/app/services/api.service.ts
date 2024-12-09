@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 import { IVideoResponseModel } from '../main/components/list-videos/interfaces/video-response-model.interface';
+import { IUserRequestModel } from '../main/components/list-users/interfaces/user-request-model.interface';
 
 
 @Injectable({
@@ -12,8 +13,8 @@ export class ApiService {
   private readonly _api: string = 'http://localhost:8000';
 
   private tokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-
   private userNameSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  private roleSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient) {
     if (typeof localStorage !== 'undefined') {
@@ -36,12 +37,20 @@ export class ApiService {
           if (typeof localStorage !== 'undefined') {
             localStorage.setItem('access_token', response.access_token);
             localStorage.setItem('user_name_value', params.username);
+            localStorage.setItem('role_value', response.role);
           }
           this.tokenSubject.next(response.access_token);
           this.userNameSubject.next(params.username);
+          this.roleSubject.next(response.role);
         }),
-
       );
+  }
+
+  public isAdmin(): boolean {
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('role_value') === 'admin';
+    }
+    return false;
   }
 
   // Выход
@@ -50,6 +59,10 @@ export class ApiService {
       localStorage.removeItem('access_token');
     }
     this.tokenSubject.next(null);
+  }
+
+  public getUsers(): Observable<any> {
+    return this.http.get(`${this._api}/admin/users/`);
   }
 
   // Получаем текущий токен
@@ -77,6 +90,10 @@ export class ApiService {
       console.log(error);
       return of('');
     }
+  }
+
+  public addUser(user: IUserRequestModel): Observable<{message: any}> {
+    return this.http.post<{message: any}>(`${this._api}/admin/users/add/`, user);
   }
 
   public getListVideos(): Observable<IVideoResponseModel[]> {

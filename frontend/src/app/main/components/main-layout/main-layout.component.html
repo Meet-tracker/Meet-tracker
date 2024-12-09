@@ -18,8 +18,7 @@
   <div class="main-layout__content">
     <list-videos class="main-layout__list-videos"></list-videos>
     <content-block></content-block>
-
-    <list-users class="main-layout__list-users"></list-users>
+    <list-users *ngIf="showAdminPanel" class="main-layout__list-users"></list-users>
   </div>
 </div>
 

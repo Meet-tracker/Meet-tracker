@@ -28,6 +28,8 @@ import { ContentBlockComponent } from './components/content-block/content-block.
 import { ListUsersComponent } from './components/list-users/list-users.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ListVideosItemComponent } from '../modules/list-videos-item/list-videos-item.component';
+import { ListUserItemComponent } from '../modules/list-user-item/list-user-item.component';
+import { TuiInputModule, TuiInputNumberModule } from '@taiga-ui/legacy';
 
 @NgModule({
   declarations: [
@@ -36,34 +38,37 @@ import { ListVideosItemComponent } from '../modules/list-videos-item/list-videos
     ListUsersComponent,
     ListVideosComponent,
     ListVideosItemComponent,
+    ListUserItemComponent,
   ],
-  imports: [
-    CommonModule,
-    routing,
-    TuiButton,
-    TuiAvatar,
-    TuiIcon,
-    TuiAccordionDirective,
-    TuiAccordionItem,
-    [TuiAccordion],
-    TuiFilesComponent,
-    TuiFile,
-    TuiInputFiles,
-    TuiInputFilesDirective,
-    ReactiveFormsModule,
-    TuiFileRejectedPipe,
-    TuiChevron,
-    TuiDropdownOptionsDirective,
-    TuiLink,
-    TuiDropdownDirective,
-    TuiDropdownOpen,
-    TuiDataListDropdownManager,
-    TuiOptGroup,
-    TuiOption,
-    TuiLineClamp,
-    TuiBadge,
-    TuiStatus,
-  ],
+    imports: [
+        CommonModule,
+        routing,
+        TuiButton,
+        TuiAvatar,
+        TuiIcon,
+        TuiAccordionDirective,
+        TuiAccordionItem,
+        [TuiAccordion],
+        TuiFilesComponent,
+        TuiFile,
+        TuiInputFiles,
+        TuiInputFilesDirective,
+        ReactiveFormsModule,
+        TuiFileRejectedPipe,
+        TuiChevron,
+        TuiDropdownOptionsDirective,
+        TuiLink,
+        TuiDropdownDirective,
+        TuiDropdownOpen,
+        TuiDataListDropdownManager,
+        TuiOptGroup,
+        TuiOption,
+        TuiLineClamp,
+        TuiBadge,
+        TuiStatus,
+        TuiInputModule,
+        TuiInputNumberModule,
+    ],
 })
 export class MainModule {
 }

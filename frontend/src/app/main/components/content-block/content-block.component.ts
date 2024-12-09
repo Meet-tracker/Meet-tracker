@@ -3,7 +3,7 @@ import { ApiService } from '../../../services/api.service';
 import { FormControl, Validators } from '@angular/forms';
 import { TuiFileLike } from '@taiga-ui/kit';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, EMPTY, Observable, of, switchMap } from 'rxjs';
+import { combineLatest, EMPTY, Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'content-block',

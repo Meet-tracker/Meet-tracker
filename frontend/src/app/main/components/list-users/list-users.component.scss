@@ -2,21 +2,20 @@
 
 .list-users {
   &__container {
-    opacity: 0;
     width: 320px;
   }
 
   &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 8px;
+    font-family: var(--tui-font-text), sans-serif;
+    font-size: 20px;
+    font-weight: 400;
     background-color: $accent-color2;
-    padding: 0 16px;
-    height: 72px;
+    border-bottom: 1px solid $line;
   }
 
-  &__item {
-    background-color: $accent-color1;
+  &__items {
+    margin-bottom: 10px;
   }
 
   &__search {
