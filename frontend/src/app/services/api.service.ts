@@ -108,6 +108,10 @@ export class ApiService {
     return this.http.put(`${this._api}/admin/users/${username}/make_admin/`, {});
   }
 
+  public removeAdminUser(username: string): Observable<any> {
+    return this.http.put(`${this._api}/admin/users/${username}/remove_admin/`, {});
+  }
+
   public getListVideos(): Observable<IVideoResponseModel[]> {
     return this.http.get<IVideoResponseModel[]>(`${this._api}/user/transcriptions/`)
   }

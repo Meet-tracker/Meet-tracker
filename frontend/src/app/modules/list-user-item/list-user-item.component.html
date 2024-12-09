@@ -39,6 +39,10 @@
   <div class="list-users-item__popup">
     <button class="list-users-item__popup-item" (click)="blockUser($event)">Заблокировать</button>
     <button class="list-users-item__popup-item" (click)="deleteUser($event)">Удалить</button>
-    <button class="list-users-item__popup-item" (click)="makeAdminUser($event)">Сделать администратором</button>
+    @if (model.Role === 'admin') {
+      <button class="list-users-item__popup-item" (click)="removeAdminUser($event)">Разжаловать</button>
+    } @else if (model.Role === 'user') {
+      <button class="list-users-item__popup-item" (click)="makeAdminUser($event)">Сделать администратором</button>
+    }
   </div>
 </ng-template>

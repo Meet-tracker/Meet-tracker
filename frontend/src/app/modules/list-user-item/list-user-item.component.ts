@@ -54,4 +54,15 @@ export class ListUserItemComponent {
     this.model.Role = 'admin';
     this._cdr.detectChanges();
   }
+
+  public removeAdminUser(event: Event): void {
+    this.open = false;
+    if (event.defaultPrevented) {
+      return
+    }
+    event.preventDefault();
+    this._apiService.removeAdminUser(this.model.Username).pipe(take(1)).subscribe();
+    this.model.Role = 'user';
+    this._cdr.detectChanges();
+  }
 }
