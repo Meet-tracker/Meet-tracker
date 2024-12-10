@@ -20,7 +20,7 @@ export class MainLayoutComponent {
   }
 
   public getTgBotLink(): string {
-    return `tg://resolve?domain=meet_tracker_bot&start=${this._apiService.getToken()}`
+    return `tg://resolve?domain=meet_tracker_bot&start=${this._apiService.getUserName()}`
   }
 
   public logOut(): void {

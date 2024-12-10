@@ -71,6 +71,9 @@ export class ApiService {
   }
 
   public getUserName(): string | null {
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('user_name_value');
+    }
     return this.userNameSubject.value;
   }
 
