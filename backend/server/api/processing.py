@@ -66,7 +66,7 @@ async def get_result(request: Request):
     telegram = await get_telegram(user)
 
     if telegram:
-        await bot.send_message(chat_id=int(telegram), text=f"http://localhost:4000/result/{task_id}")
+        await bot.send_message(chat_id=int(telegram), text=f"http://localhost:4000/main/video/{task_id}")
 
     await upsert_transcription_text(task_id, text, status)
 
