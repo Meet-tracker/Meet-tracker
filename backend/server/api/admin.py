@@ -3,7 +3,7 @@ from api.models import User
 from fastapi import APIRouter, HTTPException, Depends, Request
 
 from database import (create_user, get_user, delete_user, block_user,
-                      modify_admin, get_transcription_by_username, get_configuration)
+                      modify_admin, get_transcription_by_username, get_configuration, edit_configuration)
 
 admin_router = APIRouter()
 
@@ -32,14 +32,21 @@ async def add_user_api(user: User, current_admin: dict = Depends(get_current_adm
 
 @admin_router.put("/admin/users/{username}/block/")
 async def block_user_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
-    await block_user(username)
+    await block_user(username, False)
     return {"message": f"User {username} blocked"}
+
+
+@admin_router.put("/admin/users/{username}/unblock/")
+async def block_user_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
+    await block_user(username, True)
+    return {"message": f"User {username} unblocked"}
 
 
 @admin_router.put("/admin/users/{username}/make_admin/")
 async def make_admin_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
     await modify_admin(username, 'admin')
     return {"message": f"User {username} promoted to admin"}
+
 
 @admin_router.put("/admin/users/{username}/remove_admin/")
 async def remove_admin_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
@@ -51,8 +58,6 @@ async def remove_admin_api(username: str, current_admin: dict = Depends(get_curr
 async def delete_user_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
     await delete_user(username)
     return {"message": f"User {username} deleted"}
-
-
 
 
 @admin_router.get("/admin/prompt")
@@ -73,22 +78,19 @@ async def get_model_llm_api(current_admin: dict = Depends(get_current_admin_user
     return {"message": model}
 
 
-
-
-
 @admin_router.post("/admin/prompt")
 async def edit_prompt_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
-    await delete_user(username)
-    return {"message": f"User {username} deleted"}
+    await edit_configuration("prompt", username)
+    return {"message": f"Success"}
 
 
 @admin_router.post("/admin/model/whisper")
 async def edit_model_whisper_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
-    await delete_user(username)
-    return {"message": f"User {username} deleted"}
+    await edit_configuration("whisper_model", username)
+    return {"message": f"Success"}
 
 
 @admin_router.post("/admin/model/llm")
 async def edit_model_llm_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
-    await delete_user(username)
-    return {"message": f"User {username} deleted"}
+    await edit_configuration("llm_model", username)
+    return {"message": f"Success"}

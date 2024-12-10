@@ -96,6 +96,10 @@ export class ApiService {
     return this.http.put(`${this._api}/admin/users/${username}/block/`, {});
   }
 
+  public unblockUser(username: string): Observable<any> {
+    return this.http.put(`${this._api}/admin/users/${username}/unblock/`, {});
+  }
+
   public addUser(user: IUserRequestModel): Observable<{ message: any }> {
     return this.http.post<{ message: any }>(`${this._api}/admin/users/add/`, user);
   }
@@ -123,6 +127,5 @@ export class ApiService {
         return of({error: 'Upload failed', details: error});
       })
     );
-
   }
 }

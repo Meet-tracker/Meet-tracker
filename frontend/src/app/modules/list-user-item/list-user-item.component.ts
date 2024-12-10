@@ -33,6 +33,17 @@ export class ListUserItemComponent {
     this._cdr.detectChanges();
   }
 
+  public unblockUser(event: Event): void {
+    this.open = false;
+    if (event.defaultPrevented) {
+      return
+    }
+    event.preventDefault();
+    this._apiService.unblockUser(this.model.Username).pipe(take(1)).subscribe();
+    this.model.isActive = true;
+    this._cdr.detectChanges();
+  }
+
   public deleteUser(event: Event): void {
     this.open = false;
     if (event.defaultPrevented) {

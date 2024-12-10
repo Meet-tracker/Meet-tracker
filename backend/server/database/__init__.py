@@ -3,7 +3,7 @@ from .init import init_db
 from .user import create_user, add_telegram, get_telegram
 from .admin import get_user, block_user, delete_user, modify_admin
 from .transcription import get_transcription_text_by_id, upsert_transcription_text, upsert_transcription, get_transcription_by_username, delete_transcription
-from .configuration import get_configuration
+from .configuration import get_configuration, edit_configuration
 
 __all__ = [
     'init_db',
@@ -19,5 +19,6 @@ __all__ = [
     'upsert_transcription_text',
     'get_transcription_by_username',
     'delete_transcription',
-    'get_configuration'
+    'get_configuration',
+    'edit_configuration'
 ]

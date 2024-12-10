@@ -27,14 +27,15 @@ async def get_user(
 async def block_user(
         db_connection: asyncpg.Connection,
         username: str,
+        is_active: bool
 ):
     await db_connection.execute(
         '''
         UPDATE users
-        SET is_active = FALSE
+        SET is_active = $2
         WHERE username = $1
         ''',
-        username
+        username, is_active
     )
 
 

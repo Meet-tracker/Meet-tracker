@@ -14,3 +14,18 @@ async def get_configuration(
         '''
     )
     return records[name]
+
+
+@with_postgres_connection
+async def edit_configuration(
+        db_connection: asyncpg.Connection,
+        name,
+        text
+):
+    await db_connection.execute(
+        f'''
+        UPDATE configuration 
+        SET {name} = $1
+        ''', text
+    )
+    return
