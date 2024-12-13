@@ -52,7 +52,11 @@ export class ContentBlockComponent implements OnInit {
       )
       .subscribe({
         next: ((result: any): void => {
-          this.videoResult = result.result;
+          if (result.result === 'False') {
+            this.videoResult = 'В обработке';
+          } else {
+            this.videoResult = result.result;
+          }
           this.loading = false;
           this._cdr.detectChanges();
         })
