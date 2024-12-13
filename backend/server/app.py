@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from api import routers
 from data.config import conf
-from data.functions import create_bucket
+from data.functions import create_bucket, init_configuration
 from database.init import init_db
 import ollama
 
@@ -26,8 +26,10 @@ app.add_middleware(
 @app.on_event("startup")
 async def startup():
     await init_db()
+    await init_configuration()
     await create_bucket()
     await ollama.AsyncClient(host=f'http://{conf.OLLAMA_NAME}:11434').pull(conf.OLLAMA_MODEL)
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=1)

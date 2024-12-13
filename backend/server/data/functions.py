@@ -2,6 +2,7 @@ from miniopy_async import Minio
 from ollama import AsyncClient
 from aiogram import Bot
 
+from database import get_configuration, add_configuration
 from data.config import conf
 
 
@@ -34,10 +35,16 @@ minio = Minio(
 
 
 async def generate_llm_answer(text):
-    answer = await ollama.generate(model='llama3.1:8b',
-                                   prompt=f"Текст:\n{text}\nВыведи резюме по каждому участнику встречи.")
+    configuration = await get_configuration('llm_model, prompt')
+    answer = await ollama.generate(model=configuration['llm_model'],
+                                   prompt=configuration['prompt'].format(text=text))
     return answer['response']
 
+
+async def init_configuration():
+    configuration = await get_configuration('*')
+    if configuration is None:
+        await add_configuration(conf.WHISPER_MODEL, conf.OLLAMA_MODEL, conf.PROMPT)
 
 ollama = AsyncClient(host=f'http://{conf.OLLAMA_NAME}:11434')
 

@@ -64,19 +64,19 @@ async def delete_user_api(username: str, current_admin: dict = Depends(get_curre
 @admin_router.get("/admin/prompt")
 async def get_prompt_api(current_admin: dict = Depends(get_current_admin_user)):
     prompt = await get_configuration('prompt')
-    return {"message": prompt}
+    return {"prompt": prompt}
 
 
 @admin_router.get("/admin/model/whisper")
 async def get_model_whisper_api(current_admin: dict = Depends(get_current_admin_user)):
     model = await get_configuration("whisper_model")
-    return {"message": model}
+    return {"whisper": model}
 
 
 @admin_router.get("/admin/model/llm")
 async def get_model_llm_api(current_admin: dict = Depends(get_current_admin_user)):
     model = await get_configuration("llm_model")
-    return {"message": model}
+    return {"llm": model}
 
 
 @admin_router.post("/admin/prompt")

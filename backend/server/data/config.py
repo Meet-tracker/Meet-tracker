@@ -26,9 +26,12 @@ class Configuration:
     MINIO_BUCKET_NAME = env.str("MINIO_BUCKET_NAME")
 
     WHISPER_NAME = env.str("WHISPER_NAME")
+    WHISPER_MODEL = env.str("WHISPER_MODEL")
 
     OLLAMA_NAME = env.str("OLLAMA_NAME")
     OLLAMA_MODEL = env.str("OLLAMA_MODEL")
+
+    PROMPT = env.str("PROMPT")
 
 
 conf = Configuration()
