@@ -131,4 +131,25 @@ export class ApiService {
       })
     );
   }
+
+  public getPrompt(): Observable<{prompt: string}> {
+    return this.http.get<{prompt: string}>(`${this._api}/admin/prompt`);
+  }
+  public postPrompt(prompt: string): Observable<{prompt: string}> {
+    return this.http.post<{prompt: string}>(`${this._api}/admin/prompt`, {prompt: prompt});
+  }
+
+  public getWhisper(): Observable<{whisper: string}> {
+    return this.http.get<{whisper: string}>(`${this._api}/admin/model/whisper`);
+  }
+  public postWhisper(whisper: string): Observable<{whisper: string}> {
+    return this.http.post<{whisper: string}>(`${this._api}/admin/model/whisper`, {whisper: whisper});
+  }
+
+  public getLLM(): Observable<{llm: string}> {
+    return this.http.get<{llm: string}>(`${this._api}/admin/model/llm`);
+  }
+  public postLLM(llm: string): Observable<{llm: string}> {
+    return this.http.post<{llm: string}>(`${this._api}/admin/model/llm`, {llm: llm});
+  }
 }

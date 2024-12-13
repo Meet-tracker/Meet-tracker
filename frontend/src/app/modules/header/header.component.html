@@ -1,0 +1,27 @@
+<header class="header">
+  <a class="header__item" (click)="toMain()">
+    <div class="header__icon">
+      <tui-icon class="header__svg" icon="@tui.house"></tui-icon>
+    </div>
+    <span class="header__link">Главная</span>
+  </a>
+  <a class="header__item" [href]="getTgBotLink()">
+    <div class="header__icon">
+      <tui-icon class="header__svg" icon="tg"></tui-icon>
+    </div>
+    <span class="header__link">Тг бот</span>
+  </a>
+  <a class="header__item" (click)="toServerSettings()">
+    <div class="header__icon">
+      <tui-icon class="header__svg" icon="@tui.monitor-cog"></tui-icon>
+    </div>
+    <span class="header__link">Настройки сервера</span>
+  </a>
+  <a class="header__item" (click)="logOut()">
+    <div class="header__icon">
+      <tui-icon class="header__svg" icon="@tui.log-out"></tui-icon>
+    </div>
+    <span class="header__link">Выйти</span>
+  </a>
+
+</header>

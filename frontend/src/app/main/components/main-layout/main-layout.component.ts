@@ -14,17 +14,7 @@ export class MainLayoutComponent {
 
   constructor(
     private _apiService: ApiService,
-    private _router: Router,
   ) {
     this.showAdminPanel = this._apiService.isAdmin();
-  }
-
-  public getTgBotLink(): string {
-    return `tg://resolve?domain=meet_tracker_bot&start=${this._apiService.getUserName()}`
-  }
-
-  public logOut(): void {
-    this._apiService.logout();
-    this._router.navigate(['auth']);
   }
 }

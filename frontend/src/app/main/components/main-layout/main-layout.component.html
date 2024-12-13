@@ -1,19 +1,5 @@
 <div class="main-layout__container">
-  <header class="main-layout__header">
-    <a class="main-layout__header__item" [href]="getTgBotLink()">
-      <div class="main-layout__header__icon">
-        <tui-icon class="main-layout__svg_tg" icon="tg"></tui-icon>
-      </div>
-      <span class="main-layout__header__link">Тг бот</span>
-    </a>
-    <a class="main-layout__header__item" (click)="logOut()">
-      <div class="main-layout__header__icon">
-        <tui-icon class="main-layout__svg_tg" icon="@tui.log-out"></tui-icon>
-      </div>
-      <span class="main-layout__header__link">Выйти</span>
-    </a>
-
-  </header>
+  <app-header></app-header>
 
   <div class="main-layout__content">
     <list-videos class="main-layout__list-videos"></list-videos>

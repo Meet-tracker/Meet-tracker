@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { ResultComponent } from './result/components/result.component';
 import { authGuardActivate } from './guards/auth.guard';
+import { ServerSettingsComponent } from './server-settings/server-settings.component';
 
 export const routes: Routes = [
   {
@@ -18,8 +18,8 @@ export const routes: Routes = [
     loadChildren: () => import('./auth/auth.router-module').then(m => m.AuthRouterModule),
   },
   {
-    path: 'result/:id',
-    component: ResultComponent,
+    path: 'server-settings',
+    component: ServerSettingsComponent,
     canActivate: [authGuardActivate],
   },
   {

@@ -1,0 +1,31 @@
+@import '../../../variables';
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  height: 80px;
+  background-color: $fon-primary;
+
+  &__item {
+    display: flex;
+    cursor: pointer;
+
+    &:not(:last-child) {
+      margin: 0 320px 0 0;
+    }
+  }
+
+  &__icon {
+    margin-right: 12px;
+  }
+
+  &__svg {
+    color: $accent-color1;
+  }
+
+  &__link {
+    color: $font-color2;
+  }
+}

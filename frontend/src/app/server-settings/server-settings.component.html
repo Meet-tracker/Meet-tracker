@@ -1,0 +1,66 @@
+<div class="server-settings__container">
+  <app-header></app-header>
+
+  <div class="server-settings__content">
+    <form [formGroup]="serverForm" class="server-settings__form">
+      <div class="server-settings__control-block">
+        <tui-input formControlName="whisper" class="server-settings__control">
+          Введите название whisper модели
+          <input
+            tuiTextfieldLegacy
+            type="text"
+          />
+        </tui-input>
+        <button
+          size="l"
+          tuiButton
+          type="button"
+          [disabled]="serverForm.controls.whisper.invalid || loadingWhisper"
+          (click)="postWhisper()"
+        >
+          Отправить
+        </button>
+      </div>
+
+      <div class="server-settings__control-block">
+        <tui-input formControlName="llm" class="server-settings__control">
+          Введите название LLM модели
+          <input
+            tuiTextfieldLegacy
+            type="text"
+          />
+        </tui-input>
+        <button
+          size="l"
+          tuiButton
+          type="button"
+          [disabled]="serverForm.controls.llm.invalid || loadingLLM"
+          (click)="postLLM()"
+        >
+          Отправить
+        </button>
+      </div>
+
+
+      <tui-textarea
+        formControlName="prompt"
+        class="server-settings__textarea"
+        [expandable]="true"
+        [rows]="9"
+      >
+        Введите промпт
+      </tui-textarea>
+
+      <button
+        size="l"
+        tuiButton
+        type="button"
+        [disabled]="serverForm.controls.prompt.invalid || loadingPrompt"
+        (click)="postPrompt()"
+      >
+        Отправить
+      </button>
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+@import '../../variables';
+
+.server-settings {
+  &__container {
+    background-color: $fon-secondary;
+    min-height: 100vh;
+  }
+
+  &__content {
+    margin: 70px 0 0 0;
+    padding: 0 120px;
+  }
+
+  &__form {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  &__control-block {
+    display: grid;
+    grid-template-columns: 6fr 1fr;
+    gap: 4px;
+    margin: 0 0 30px;
+  }
+
+  &__textarea {
+    margin: 0 0 8px;
+  }
+}
