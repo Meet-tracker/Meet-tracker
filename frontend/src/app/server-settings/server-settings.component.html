@@ -20,6 +20,15 @@
         >
           Отправить
         </button>
+        <button
+          size="l"
+          tuiButton
+          type="button"
+          [disabled]="loadingWhisper"
+          (click)="getWhisper()"
+        >
+          Получить
+        </button>
       </div>
 
       <div class="server-settings__control-block">
@@ -39,6 +48,15 @@
         >
           Отправить
         </button>
+        <button
+          size="l"
+          tuiButton
+          type="button"
+          [disabled]="loadingLLM"
+          (click)="getLLM()"
+        >
+          Получить
+        </button>
       </div>
 
 
@@ -52,6 +70,7 @@
       </tui-textarea>
 
       <button
+        class="server-settings__textarea-button"
         size="l"
         tuiButton
         type="button"
@@ -60,7 +79,15 @@
       >
         Отправить
       </button>
-
+      <button
+        size="l"
+        tuiButton
+        type="button"
+        [disabled]="loadingPrompt"
+        (click)="getPrompt()"
+      >
+        Получить
+      </button>
     </form>
   </div>
 </div>

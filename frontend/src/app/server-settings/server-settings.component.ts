@@ -38,29 +38,9 @@ export class ServerSettingsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this._apiService.getWhisper()
-      .pipe(take(1))
-      .subscribe({
-        next: (whisperData: {whisper: string}) => {
-          this.serverForm.controls.whisper.setValue(whisperData.whisper);
-        }
-      });
-
-    this._apiService.getLLM()
-      .pipe(take(1))
-      .subscribe({
-        next: (LLMData: {llm: string}) => {
-          this.serverForm.controls.llm.setValue(LLMData.llm);
-        }
-      });
-
-    this._apiService.getPrompt()
-      .pipe(take(1))
-      .subscribe({
-        next: (promptData: {prompt: string}) => {
-          this.serverForm.controls.prompt.setValue(promptData.prompt);
-        }
-      });
+    this.getWhisper();
+    this.getLLM();
+    this.getPrompt();
   }
 
   public postWhisper() {
@@ -75,6 +55,16 @@ export class ServerSettingsComponent implements OnInit {
     }
   }
 
+  public getWhisper() {
+    this._apiService.getWhisper()
+      .pipe(take(1))
+      .subscribe({
+        next: (whisperData: {whisper: string}) => {
+          this.serverForm.controls.whisper.setValue(whisperData.whisper);
+        }
+      });
+  }
+
   public postLLM() {
     this.loadingLLM = true;
     if (this.serverForm.controls.llm.valid) {
@@ -87,6 +77,16 @@ export class ServerSettingsComponent implements OnInit {
     }
   }
 
+  public getLLM() {
+    this._apiService.getLLM()
+      .pipe(take(1))
+      .subscribe({
+        next: (LLMData: {llm: string}) => {
+          this.serverForm.controls.llm.setValue(LLMData.llm);
+        }
+      });
+  }
+
   public postPrompt() {
     this.loadingPrompt = true;
     if (this.serverForm.controls.prompt.valid) {
@@ -97,5 +97,15 @@ export class ServerSettingsComponent implements OnInit {
           }
         });
     }
+  }
+
+  public getPrompt() {
+    this._apiService.getPrompt()
+      .pipe(take(1))
+      .subscribe({
+        next: (promptData: {prompt: string}) => {
+          this.serverForm.controls.prompt.setValue(promptData.prompt);
+        }
+      });
   }
 }

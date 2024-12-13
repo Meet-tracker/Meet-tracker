@@ -18,12 +18,16 @@
 
   &__control-block {
     display: grid;
-    grid-template-columns: 6fr 1fr;
+    grid-template-columns: 5fr 1fr 1fr;
     gap: 4px;
     margin: 0 0 30px;
   }
 
   &__textarea {
     margin: 0 0 8px;
+  }
+
+  &__textarea-button {
+    margin: 0 8px 0 0;
   }
 }
