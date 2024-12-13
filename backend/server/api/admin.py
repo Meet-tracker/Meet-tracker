@@ -79,18 +79,21 @@ async def get_model_llm_api(current_admin: dict = Depends(get_current_admin_user
 
 
 @admin_router.post("/admin/prompt")
-async def edit_prompt_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
-    await edit_configuration("prompt", username)
+async def edit_prompt_api(request: Request, current_admin: dict = Depends(get_current_admin_user)):
+    message = await request.json()
+    await edit_configuration("prompt", message['prompt'])
     return {"message": f"Success"}
 
 
 @admin_router.post("/admin/model/whisper")
-async def edit_model_whisper_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
-    await edit_configuration("whisper_model", username)
+async def edit_model_whisper_api(request: Request, current_admin: dict = Depends(get_current_admin_user)):
+    message = await request.json()
+    await edit_configuration("whisper_model", message['whisper'])
     return {"message": f"Success"}
 
 
 @admin_router.post("/admin/model/llm")
-async def edit_model_llm_api(username: str, current_admin: dict = Depends(get_current_admin_user)):
-    await edit_configuration("llm_model", username)
+async def edit_model_llm_api(request: Request, current_admin: dict = Depends(get_current_admin_user)):
+    message = await request.json()
+    await edit_configuration("llm_model", message['llm'])
     return {"message": f"Success"}
