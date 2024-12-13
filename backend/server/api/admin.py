@@ -1,5 +1,6 @@
 from api.auth import get_current_admin_user
 from api.models import User
+import logging
 from fastapi import APIRouter, HTTPException, Depends, Request
 
 from database import (create_user, get_user, delete_user, block_user,
@@ -88,6 +89,7 @@ async def edit_prompt_api(request: Request, current_admin: dict = Depends(get_cu
 @admin_router.post("/admin/model/whisper")
 async def edit_model_whisper_api(request: Request, current_admin: dict = Depends(get_current_admin_user)):
     message = await request.json()
+    logging.info(message)
     await edit_configuration("whisper_model", message['whisper'])
     return {"message": f"Success"}
 
