@@ -13,7 +13,7 @@ async def get_configuration(
         SELECT {name} FROM configuration
         '''
     )
-    return records[name] if name != '*' else records
+    return records
 
 
 @with_postgres_connection
