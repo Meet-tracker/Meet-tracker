@@ -1,3 +1,5 @@
+import logging
+
 import asyncpg
 
 from .db_connection import with_postgres_connection
@@ -16,7 +18,7 @@ async def get_user(
         query += f" WHERE username = '{username}'"
 
     records = await db_connection.fetch(query)
-
+    logging.info(records)
     if len(records) == 1:
         return records[0]
 

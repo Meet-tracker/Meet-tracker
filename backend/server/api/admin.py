@@ -1,5 +1,5 @@
-from api.auth import get_current_admin_user
-from api.models import User
+from .auth import get_current_admin_user
+from .models import User
 import logging
 from fastapi import APIRouter, HTTPException, Depends, Request
 

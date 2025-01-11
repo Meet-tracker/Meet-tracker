@@ -3,7 +3,7 @@ from ollama import AsyncClient
 from aiogram import Bot
 
 from database import get_configuration, add_configuration
-from data.config import conf
+from .config import conf
 
 
 async def upload_file(name, file_path):
@@ -15,6 +15,10 @@ async def upload_file(name, file_path):
         )
     except Exception as e:
         print(f"Failed to upload {name}: {e}")
+
+
+async def download_file(name):
+    return await minio.get_object(conf.MINIO_BUCKET_NAME, name)
 
 
 async def create_bucket():

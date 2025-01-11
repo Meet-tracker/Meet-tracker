@@ -1,5 +1,5 @@
-from api.auth import create_access_token, get_current_user
-from api.models import AuthUser, User
+from .auth import create_access_token, get_current_user
+from .models import AuthUser, User
 from fastapi import APIRouter, HTTPException, Request, Depends
 
 from database import create_user, get_user, get_transcription_by_username, delete_transcription
