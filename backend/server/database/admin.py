@@ -18,8 +18,7 @@ async def get_user(
         query += f" WHERE username = '{username}'"
 
     records = await db_connection.fetch(query)
-    logging.info(records)
-    if len(records) == 1:
+    if username != None:
         return records[0]
 
     return records

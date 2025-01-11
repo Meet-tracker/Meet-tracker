@@ -3,13 +3,12 @@ import os
 import aiohttp
 import librosa
 import soundfile as sf
-from .auth import get_current_user, get_current_admin_user
 from data.config import conf
 from data.functions import upload_file, generate_llm_answer, bot, download_file
-from fastapi import APIRouter, Request, File, UploadFile, Depends, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi import APIRouter, Request, File, UploadFile, Depends
 
 from database import upsert_transcription, upsert_transcription_text, get_transcription_text_by_id, get_telegram
+from .auth import get_current_user, get_current_admin_user
 
 
 async def send_post_request(data):
@@ -39,6 +38,7 @@ async def upload(
     sf.write(audio_path, audio, sr)
     os.remove(tmp_path)
     await upload_file(f'{id}.wav', audio_path)
+    os.remove(audio_path)
     await send_post_request({'task_id': id, 'tmp_path': audio_path, 'user': current_user['username']})
     return {"id": id}
 
@@ -46,13 +46,9 @@ async def upload(
 @processing_router.get("/download/{file_name}")
 async def download(
         file_name: str,
-        #current_admin: dict = Depends(get_current_admin_user)
+        current_admin: dict = Depends(get_current_admin_user)
 ):
-    try:
-        file = await download_file(f"{file_name}.wav")
-        return StreamingResponse(file.stream(), media_type="application/octet-stream")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Не удалось загрузить {file_name}: {e}")
+    return await download_file(f"{file_name}.wav")
 
 
 @processing_router.post("/whisper/result")
