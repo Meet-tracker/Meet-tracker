@@ -26,7 +26,6 @@ export class ListVideosItemComponent {
   }
 
 
-
   public deleteItem(event: Event): void {
     if (event.defaultPrevented) {
       return
@@ -34,6 +33,30 @@ export class ListVideosItemComponent {
     event.preventDefault();
     this.isDeleted = true;
     this._apiService.deleteVideo(this.model.Id).subscribe();
+    this._cdr.detectChanges();
+  }
+
+
+  public downloadAudio(event: Event): void {
+    if (event.defaultPrevented) {
+      return;
+    }
+    event.preventDefault();
+
+    this._apiService.downloadAudio(this.model.Id).subscribe({
+      next: (blob: Blob) => {
+        const fileName = `audio_${this.model.Id}.mp3`;
+        const downloadLink = document.createElement('a');
+        const url = window.URL.createObjectURL(blob);
+
+        downloadLink.href = url;
+        downloadLink.download = fileName;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        window.URL.revokeObjectURL(url);
+      }
+    });
     this._cdr.detectChanges();
   }
 }

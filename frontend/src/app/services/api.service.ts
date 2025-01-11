@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 import { IVideoResponseModel } from '../main/components/list-videos/interfaces/video-response-model.interface';
 import { IUserRequestModel } from '../main/components/list-users/interfaces/user-request-model.interface';
@@ -125,6 +125,15 @@ export class ApiService {
 
   public getListVideosByUser(username: string): Observable<IVideoResponseModel[]> {
     return this.http.post<IVideoResponseModel[]>(`${this._api}/admin/transcriptions/`, {'username': username});
+  }
+
+  public downloadAudio(id: string): Observable<Blob> {
+    return this.http.get(`${this._api}/download/${id}`, {
+      responseType: 'blob',
+      headers: new HttpHeaders({
+        'Content-Type': 'audio/mpeg'
+      })
+    });
   }
 
   public uploadVideo(formData: FormData): Observable<any> {
