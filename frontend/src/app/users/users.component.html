@@ -4,11 +4,20 @@
   <div class="users__content">
     <list-users (currentUser)="setCurrentUser($event)" class="users__list-users"></list-users>
     @if (currentUser) {
-      <list-videos (selectVideo)="setSelectVideo($event)" [currentUser]="currentUser" class="users__list-videos"></list-videos>
+      <list-videos (selectVideo)="setSelectVideo($event)" [currentUser]="currentUser"
+                   class="users__list-videos"></list-videos>
     }
 
-    @if (selectVideo) {
-      {{selectVideo.Text}}
+
+    @if (videoText) {
+      <div>
+        <div class="users__text-title">
+          Отчёт о встрече:
+        </div>
+        <div class="users__text">
+          {{ videoText }}
+        </div>
+      </div>
     }
   </div>
 </div>
