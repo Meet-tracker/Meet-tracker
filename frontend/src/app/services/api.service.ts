@@ -123,6 +123,10 @@ export class ApiService {
     return this.http.get<IVideoResponseModel[]>(`${this._api}/user/transcriptions/`)
   }
 
+  public getListVideosByUser(username: string): Observable<IVideoResponseModel[]> {
+    return this.http.post<IVideoResponseModel[]>(`${this._api}/admin/transcriptions/`, {'username': username});
+  }
+
   public uploadVideo(formData: FormData): Observable<any> {
     return this.http.post(`${this._api}/upload`, formData).pipe(
       catchError((error: any) => {

@@ -5,7 +5,7 @@
   <div class="list-videos__items">
     @for (video of listVideos; track '') {
       @if (video.Status !== VideoStatus.Deleted) {
-        <list-videos-item [model]="video"></list-videos-item>
+        <list-videos-item (click)="selectVideo.next(video)" [model]="video"></list-videos-item>
       }
     }
   </div>

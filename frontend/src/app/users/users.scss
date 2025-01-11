@@ -1,0 +1,18 @@
+@import '../../variables';
+
+.users {
+  &__container {
+    background-color: $fon-secondary;
+    min-height: 100vh;
+  }
+
+  &__content {
+    display: flex;
+    margin: 70px 0 0 0;
+    padding: 0 120px;
+  }
+
+  &__list-users {
+    margin: 0 50px 0 0;
+  }
+}

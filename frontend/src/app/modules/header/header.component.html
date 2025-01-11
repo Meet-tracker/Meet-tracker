@@ -17,6 +17,12 @@
     </div>
     <span class="header__link">Настройки сервера</span>
   </a>
+  <a class="header__item" (click)="toUsers()">
+    <div class="header__icon">
+      <tui-icon class="header__svg" icon="@tui.user"></tui-icon>
+    </div>
+    <span class="header__link">Пользователи</span>
+  </a>
   <a class="header__item" (click)="logOut()">
     <div class="header__icon">
       <tui-icon class="header__svg" icon="@tui.log-out"></tui-icon>

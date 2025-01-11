@@ -25,13 +25,7 @@ export class ListVideosItemComponent {
   ) {
   }
 
-  public toVideoInf(event: Event): void {
-    if (event.defaultPrevented) {
-      return
-    }
-    event.preventDefault();
-    this._router.navigate([`main/video/${this.model.Id}`]);
-  }
+
 
   public deleteItem(event: Event): void {
     if (event.defaultPrevented) {

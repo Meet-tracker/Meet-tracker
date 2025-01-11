@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { map } from 'rxjs';
 import { UserModel } from './models/user.model';
 import { IUserResponseModel } from './interfaces/user-response-model.interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ILoginModel } from '../../../auth/interfaces/login-model';
 import { IUserRequestModel } from './interfaces/user-request-model.interface';
 import sha256 from 'crypto-js/sha256';
 
@@ -15,6 +14,9 @@ import sha256 from 'crypto-js/sha256';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListUsersComponent implements OnInit {
+
+  @Output()
+  public currentUser: EventEmitter<UserModel> = new EventEmitter<UserModel>();
 
   public listUsers: UserModel[] = [];
 

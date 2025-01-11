@@ -1,0 +1,14 @@
+<div class="users__container">
+  <app-header></app-header>
+
+  <div class="users__content">
+    <list-users (currentUser)="setCurrentUser($event)" class="users__list-users"></list-users>
+    @if (currentUser) {
+      <list-videos (selectVideo)="setSelectVideo($event)" [currentUser]="currentUser" class="users__list-videos"></list-videos>
+    }
+
+    @if (selectVideo) {
+      {{selectVideo.Text}}
+    }
+  </div>
+</div>

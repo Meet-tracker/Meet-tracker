@@ -37,4 +37,10 @@ export class HeaderComponent {
   public toMain(): void {
     this._router.navigate(['main']);
   }
+
+  public toUsers(): void {
+    this._router.navigate(['users']);
+  }
+
+
 }

@@ -3,8 +3,8 @@
     Пользователи
   </div>
   <div class="list-users__items">
-    @for (video of listUsers; track video.Username) {
-      <list-users-item [model]="video"></list-users-item>
+    @for (user of listUsers; track user.Username) {
+      <list-users-item (click)="currentUser.next(user)" [model]="user"></list-users-item>
     }
   </div>
 
