@@ -1,16 +1,26 @@
-import logging
+import os
 
 from aiogram import Bot
-from starlette.background import BackgroundTask
 from database import get_configuration, add_configuration
 from fastapi import HTTPException
+from fastapi.responses import FileResponse
 from miniopy_async import Minio
 from ollama import AsyncClient
+from starlette.background import BackgroundTask
+import librosa
+import soundfile as sf
+import aiohttp
 
 from .config import conf
 
-import os
-from fastapi.responses import FileResponse
+
+async def send_post_request(data):
+    url = f"http://{conf.WHISPER_NAME}:8001/transcribe"
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=data) as response:
+            if response.status != 200:
+                return Exception
+            return await response.text()
 
 
 async def upload_file(name, file_path):
@@ -37,14 +47,12 @@ async def download_file(name):
         return FileResponse(temp_file_path, filename=name, media_type='application/octet-stream',
                             background=BackgroundTask(cleanup, temp_file_path))
     except Exception as e:
-        logging.info(e)
         raise HTTPException(status_code=500, detail=str(e))
 
 
 async def cleanup(temp_file_path: str):
     if os.path.exists(temp_file_path):
         os.remove(temp_file_path)
-        logging.info(f"Temporary file {temp_file_path} removed")
 
 
 async def create_bucket():
@@ -56,14 +64,6 @@ async def create_bucket():
         print(f"Bucket '{conf.MINIO_BUCKET_NAME}' already exists.")
 
 
-minio = Minio(
-    f"{conf.MINIO_NAME}:9000",
-    access_key=conf.MINIO_ACCESS_KEY,
-    secret_key=conf.MINIO_SECRET_KEY,
-    secure=False
-)
-
-
 async def generate_llm_answer(text):
     configuration = await get_configuration('llm_model, prompt')
     answer = await ollama.generate(model=configuration['llm_model'],
@@ -71,11 +71,27 @@ async def generate_llm_answer(text):
     return answer['response']
 
 
+async def process(id, tmp_path, username):
+    audio_path = f"/var/lib/audio_tmp/{id}.wav"
+    audio, sr = librosa.load(tmp_path, sr=None)
+    sf.write(audio_path, audio, sr)
+    os.remove(tmp_path)
+    await upload_file(f'{id}.wav', audio_path)
+    await send_post_request({'task_id': id, 'tmp_path': audio_path, 'user': username})
+
+
 async def init_configuration():
     configuration = await get_configuration('*')
     if configuration is None:
         await add_configuration(conf.WHISPER_MODEL, conf.OLLAMA_MODEL, conf.PROMPT)
 
+
+minio = Minio(
+    f"{conf.MINIO_NAME}:9000",
+    access_key=conf.MINIO_ACCESS_KEY,
+    secret_key=conf.MINIO_SECRET_KEY,
+    secure=False
+)
 
 ollama = AsyncClient(host=f'http://{conf.OLLAMA_NAME}:11434')
 

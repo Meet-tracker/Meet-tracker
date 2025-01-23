@@ -1,23 +1,11 @@
-import os
+import asyncio
 
-import aiohttp
-import librosa
-import soundfile as sf
-from data.config import conf
-from data.functions import upload_file, generate_llm_answer, bot, download_file
 from fastapi import APIRouter, Request, File, UploadFile, Depends
 
+from data.functions import generate_llm_answer, bot, download_file
+from data.functions import process
 from database import upsert_transcription, upsert_transcription_text, get_transcription_text_by_id, get_telegram
 from .auth import get_current_user, get_current_admin_user
-
-
-async def send_post_request(data):
-    url = f"http://{conf.WHISPER_NAME}:8001/transcribe"
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, json=data) as response:
-            if response.status != 200:
-                return Exception
-            return await response.text()
 
 
 processing_router = APIRouter()
@@ -33,13 +21,7 @@ async def upload(
     contents = await file.read()
     with open(tmp_path, "wb") as f:
         f.write(contents)
-    audio_path = f"/var/lib/audio_tmp/{id}.wav"
-    audio, sr = librosa.load(tmp_path, sr=None)
-    sf.write(audio_path, audio, sr)
-    os.remove(tmp_path)
-    await upload_file(f'{id}.wav', audio_path)
-    os.remove(audio_path)
-    await send_post_request({'task_id': id, 'tmp_path': audio_path, 'user': current_user['username']})
+    asyncio.create_task(process(id, tmp_path, current_user['username']))
     return {"id": id}
 
 
@@ -54,10 +36,15 @@ async def download(
 @processing_router.post("/whisper/result")
 async def get_result(request: Request):
     message = await request.json()
-    text = await generate_llm_answer(message['text'])
-    telegram = await get_telegram(message['user'])
-    if telegram:
-        await bot.send_message(chat_id=int(telegram), text=f"http://localhost:4000/main/video/{message['task_id']}")
+    text = None
+    if message['status'] != "Failed":
+        try:
+            text = await generate_llm_answer(message['text'])
+        except:
+            message['status'] = "Failed"
+        telegram = await get_telegram(message['user'])
+        if telegram:
+            await bot.send_message(chat_id=int(telegram), text=f"http://localhost:4000/main/video/{message['task_id']}")
     await upsert_transcription_text(message['task_id'], text, message['status'])
     return {"success": True}
 
