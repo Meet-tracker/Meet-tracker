@@ -25,7 +25,6 @@ async def get_users_api(request: Request, current_admin: dict = Depends(get_curr
 @admin_router.post("/admin/users/add/")
 async def add_user_api(user: User, current_admin: dict = Depends(get_current_admin_user)):
     db_user = await get_user(user.username)
-    logging.info(db_user)
     if db_user:
         raise HTTPException(status_code=400, detail="User already exists")
     await create_user(user.username, user.password, user.email)
